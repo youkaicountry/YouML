@@ -35,7 +35,7 @@ public abstract class Module
     
     public void moduleInit(int input_dim, int output_dim, int parameters)
     {
-        this.pv = new ParameterVector(parameters);
+        //this.pv = new ParameterVector(parameters);
         this.input_dim = input_dim;
         this.output_dim = output_dim;
         this.input_buffer = null;
