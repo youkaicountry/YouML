@@ -1,15 +1,12 @@
 package com.youkaicountry.youml.parameter;
 
-public abstract class ParameterVector<T>
+public abstract class ParameterVector
 {
-    private int param_dim;
-    private double[] params;
-    private double[] derivatives;
-    public T owner;
+    public Object owner;
     
-    public ParameterVector(int dim, T owner)
+    public ParameterVector(Object owner)
     {
-        parameterInit(dim, owner);
+        parameterInit(owner);
         return;
     }
     
@@ -18,17 +15,15 @@ public abstract class ParameterVector<T>
         return;
     }
     
-    public void parameterInit(int dim, T owner)
+    public void parameterInit(Object owner)
     {
-        this.params = new double[dim];
-        this.derivatives = new double[dim];
         this.owner = owner;
         return;
     }
     
-    public abstract void getParam(int i);
+    public abstract double getParam(int i);
     public abstract void setParam(int i, double v);
-    public abstract void getDeriv(int i);
+    public abstract double getDeriv(int i);
     public abstract void setDeriv(int i, double v);
-    public abstract void size();
+    public abstract int size();
 }
