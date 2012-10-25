@@ -1,0 +1,13 @@
+.classpath
+bin/
+*#
+*~
+.settings/
+.project
+*.png
+*.jpg
+*.jpeg
+*.bmp
+/build
+/dist
+/lib
