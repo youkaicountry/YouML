@@ -21,10 +21,10 @@ public abstract class Module
     
     public ParameterVector pv;
     
-    public Module(String name, int input_dim, int output_dim, int parameters)
+    public Module(String name, int input_dim, int output_dim, ParameterVector pv)
     {
         this.name = name;
-        this.moduleInit(input_dim, output_dim, parameters);
+        this.moduleInit(input_dim, output_dim, pv);
         return;
     }
     
@@ -33,9 +33,9 @@ public abstract class Module
         this.name = name;
     }
     
-    public void moduleInit(int input_dim, int output_dim, int parameters)
+    public void moduleInit(int input_dim, int output_dim, ParameterVector pv)
     {
-        //this.pv = new ParameterVector(parameters);
+        this.pv = pv;
         this.input_dim = input_dim;
         this.output_dim = output_dim;
         this.input_buffer = null;

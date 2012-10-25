@@ -22,6 +22,7 @@ public abstract class Network extends Module
         {
             output_size += output_modules[i].output_dim;
         }
+        
         this.moduleInit(0, 0, 0);
     }
 

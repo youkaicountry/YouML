@@ -136,5 +136,12 @@ public class NeuronTest
         //    System.out.println(ng.sorted_modules[i].name);
         return;
     }
+    
+    @Test
+    public void test_single_parameter()
+    {
+        return;
+    }
+    
 
 }
