@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import com.youkaicountry.youml.parameter.MultiCaseVector;
 import com.youkaicountry.youml.parameter.NullVector;
 import com.youkaicountry.youml.parameter.ParameterVector;
 import com.youkaicountry.youml.parameter.SingleVector;
@@ -31,14 +32,30 @@ public class ParameterTest
         return;
     }
     
+    @Test 
+    public void test_multi_case_vector()
+    {
+        SingleVector pv0 = new SingleVector(3, null);
+        SingleVector pv1 = new SingleVector(1, null);
+        SingleVector pv2 = new SingleVector(8, null);
+        MultiCaseVector pv = new MultiCaseVector(new ParameterVector[] {pv0, pv1, pv2}, null);
+        baseTest(pv, 12);
+        testRW(pv, 8765799);
+        //do a simple check that setting an index on the multicase is setting
+        //the proper vector, in this case 5 goes to pv2[1]
+        pv.setParam(5, 10.0);
+        assertEquals(10.0, pv2.getParam(1), 0);
+        return;
+    }
+    
     //does basic tests
     private void baseTest(ParameterVector pv, int expected_size)
     {
-        
-        assertEquals(pv.size(), expected_size);
+        System.out.println(pv.size());
+        assertEquals(expected_size, pv.size());
         for (int i = 0; i < pv.size(); i++)
         {
-            assertEquals(pv.getParam(i), 0, 0);
+            assertEquals(0, pv.getParam(i), 0);
         }
     }
     

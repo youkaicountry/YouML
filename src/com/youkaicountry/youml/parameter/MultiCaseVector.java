@@ -17,6 +17,7 @@ public class MultiCaseVector extends ParameterVector
     public MultiCaseVector(ParameterVector[] pvs, Object owner)
     {
         super(owner);
+        this.setParameterVectors(pvs);
         return;
     }
     
@@ -43,7 +44,7 @@ public class MultiCaseVector extends ParameterVector
         {
             this.pv_lookup[i] = al_lookup.get(i);
         }
-        size = al_lookup.size()/2;
+        this.size = al_lookup.size()/2;
         return;
     }
 
