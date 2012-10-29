@@ -2,6 +2,7 @@ package com.youkaicountry.youml.module.network;
 
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.netgraph.NetGraph;
+import com.youkaicountry.youml.parameter.NullVector;
 
 public abstract class Network extends Module
 {
@@ -23,7 +24,8 @@ public abstract class Network extends Module
             output_size += output_modules[i].output_dim;
         }
         
-        this.moduleInit(0, 0, 0);
+        //TODO: This will be a MultiCaseVector instead of a nullvector
+        this.moduleInit(input_size, output_size, new NullVector(this));
     }
 
 }

@@ -1,10 +1,13 @@
 package com.youkaicountry.youml.module;
 
+import com.youkaicountry.youml.parameter.NullVector;
+
 public class PassThroughLayer extends Module
 {
     public PassThroughLayer(String name, int neurons)
     {
-        super(name, neurons, neurons, 0);
+        super(name);
+        this.moduleInit(neurons, neurons, new NullVector(this));
         return;
     }
     

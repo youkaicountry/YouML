@@ -2,7 +2,12 @@ package com.youkaicountry.youml.parameter;
 
 public class NullVector extends ParameterVector
 {
-
+    public NullVector(Object owner)
+    {
+        super(owner);
+        return;
+    }
+    
     @Override
     public double getParam(int i)
     {

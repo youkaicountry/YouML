@@ -4,14 +4,21 @@ public class SingleCaseVector extends ParameterVector
 {
     private ParameterVector pv;
     
-    public SingleCaseVector()
+    public SingleCaseVector(Object owner)
     {
+        super(owner);
         return;
     }
     
-    public SingleCaseVector(ParameterVector pv)
+    public SingleCaseVector(Object owner, ParameterVector pv)
     {
+        super(owner);
         this.setParameterVector(pv);
+        return;
+    }
+    
+    public SingleCaseVector()
+    {
         return;
     }
     

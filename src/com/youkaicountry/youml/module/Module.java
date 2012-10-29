@@ -3,11 +3,12 @@ package com.youkaicountry.youml.module;
 import java.util.Arrays;
 
 import com.youkaicountry.youml.parameter.ParameterVector;
+import com.youkaicountry.youml.parameter.SingleCaseVector;
 
 //TODO: Add offsets for input/output
 
 //TODO: Will implement evolvable, and point to the pv evolvable components
-public abstract class Module
+public abstract class Module extends SingleCaseVector
 {
     public double[] input_buffer;
     public double[] output_buffer;
@@ -19,10 +20,10 @@ public abstract class Module
     
     public String name;
     
-    public ParameterVector pv;
-    
     public Module(String name, int input_dim, int output_dim, ParameterVector pv)
     {
+        super();
+        this.parameterInit(this);
         this.name = name;
         this.moduleInit(input_dim, output_dim, pv);
         return;
@@ -30,12 +31,14 @@ public abstract class Module
     
     public Module(String name)
     {
+        super();
+        this.parameterInit(this);
         this.name = name;
     }
     
     public void moduleInit(int input_dim, int output_dim, ParameterVector pv)
     {
-        this.pv = pv;
+        this.setParameterVector(pv);
         this.input_dim = input_dim;
         this.output_dim = output_dim;
         this.input_buffer = null;

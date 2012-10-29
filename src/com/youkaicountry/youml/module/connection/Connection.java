@@ -1,5 +1,6 @@
 package com.youkaicountry.youml.module.connection;
 import com.youkaicountry.youml.module.Module;
+import com.youkaicountry.youml.parameter.SingleVector;
 
 public abstract class Connection extends Module
 {
@@ -8,7 +9,8 @@ public abstract class Connection extends Module
     
     public Connection(String name, Module module_a, Module module_b, int parameters)
     {
-        super(name, module_a.output_dim, module_b.input_dim, parameters);
+        super(name);
+        this.moduleInit(module_a.output_dim, module_b.input_dim, new SingleVector(parameters, this));
         this.module_a = module_a;
         this.module_b = module_b;
         return;

@@ -1,11 +1,14 @@
 package com.youkaicountry.youml.module;
 import java.lang.Math;
 
+import com.youkaicountry.youml.parameter.NullVector;
+
 public class SigmoidLayer extends Module
 {
     public SigmoidLayer(String name, int neurons)
     {
-        super(name, neurons, neurons, 0);
+        super(name);
+        this.moduleInit(neurons, neurons, new NullVector(this));
         return;
     }
 
