@@ -10,7 +10,7 @@ public class SingleCaseVector extends ParameterVector
         return;
     }
     
-    public SingleCaseVector(Object owner, ParameterVector pv)
+    public SingleCaseVector(ParameterVector pv, Object owner)
     {
         super(owner);
         this.setParameterVector(pv);
