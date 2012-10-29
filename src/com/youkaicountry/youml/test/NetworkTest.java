@@ -10,6 +10,8 @@ import com.youkaicountry.youml.module.PassThroughLayer;
 import com.youkaicountry.youml.module.SigmoidLayer;
 import com.youkaicountry.youml.module.connection.Connection;
 import com.youkaicountry.youml.module.connection.FullConnection;
+import com.youkaicountry.youml.module.network.FeedForwardNetwork;
+import com.youkaicountry.youml.module.network.Network;
 import com.youkaicountry.youml.netgraph.NetGraph;
 
 public class NetworkTest
@@ -83,7 +85,7 @@ public class NetworkTest
     }
     
     @Test
-    public void test_feed_forward_graph()
+    public void test_feed_forward_network()
     {
         //construct a simple 2 hidden layer feed-forward network
         PassThroughLayer inp0 = new PassThroughLayer("inp0", 2);
@@ -102,9 +104,11 @@ public class NetworkTest
         Module[] inputs = new Module[] {inp0};
         Module[] hidden = new Module[] {hid0, c1, bhid1, bout0, c0, c5, bhid0, c2, hid1, c4, c3};
         Module[] outputs = new Module[] {out0};
-        NetGraph ng = new NetGraph(inputs, hidden, outputs);
-        //for (int i = 0; i < ng.sorted_modules.length; i++)
-        //    System.out.println(ng.sorted_modules[i].name);
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        //There should be 123 parameters in this network:
+        //8 for bias 0, 8 for bias 1, 3 for bias 2
+        //16, 64, 24 for the connections
+        assertEquals(123, n.size());
         return;
     }
 

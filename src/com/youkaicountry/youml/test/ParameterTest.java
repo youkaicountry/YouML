@@ -51,7 +51,6 @@ public class ParameterTest
     //does basic tests
     private void baseTest(ParameterVector pv, int expected_size)
     {
-        System.out.println(pv.size());
         assertEquals(expected_size, pv.size());
         for (int i = 0; i < pv.size(); i++)
         {

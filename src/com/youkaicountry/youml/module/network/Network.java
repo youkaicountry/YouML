@@ -41,7 +41,6 @@ public abstract class Network extends Module
         {
             pvl[i+loc] = output_modules[i];
         }
-        //TODO: This will be a MultiCaseVector instead of a nullvector
         this.moduleInit(input_size, output_size, new MultiCaseVector(pvl, this));
         
     }
