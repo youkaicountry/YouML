@@ -4,18 +4,21 @@ import com.youkaicountry.youml.parameter.NullVector;
 
 public class BiasUnit extends Module
 {
-    public BiasUnit(String name)
+    private double value;
+    
+    public BiasUnit(String name, double value)
     {
         super(name);
         this.moduleInit(0, 1, new NullVector(this));
+        this.value = value;
         return;
     }
     
     @Override
     public void forwardProp(double[] input, double[] output)
     {
-        // TODO Auto-generated method stub
-
+        output[0] = value;
+        return;
     }
 
     @Override

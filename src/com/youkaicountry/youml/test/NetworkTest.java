@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
-import com.youkaicountry.youml.module.PassThroughLayer;
-import com.youkaicountry.youml.module.SigmoidLayer;
 import com.youkaicountry.youml.module.connection.Connection;
 import com.youkaicountry.youml.module.connection.FullConnection;
+import com.youkaicountry.youml.module.layer.PassThroughLayer;
+import com.youkaicountry.youml.module.layer.SigmoidLayer;
 import com.youkaicountry.youml.module.network.FeedForwardNetwork;
 import com.youkaicountry.youml.module.network.Network;
 import com.youkaicountry.youml.netgraph.NetGraph;
@@ -89,15 +89,15 @@ public class NetworkTest
     {
         //construct a simple 2 hidden layer feed-forward network
         PassThroughLayer inp0 = new PassThroughLayer("inp0", 2);
-        BiasUnit bhid0 = new BiasUnit("bhid0");
+        BiasUnit bhid0 = new BiasUnit("bhid0", 1.0);
         SigmoidLayer hid0 = new SigmoidLayer("hid0", 8);
         Connection c0 = new FullConnection("c0", inp0, hid0);
         Connection c1 = new FullConnection("c1", bhid0, hid0);
-        BiasUnit bhid1 = new BiasUnit("bhid1");
+        BiasUnit bhid1 = new BiasUnit("bhid1", 1.0);
         SigmoidLayer hid1 = new SigmoidLayer("hid1", 8);
         Connection c2 = new FullConnection("c2", hid0, hid1);
         Connection c3 = new FullConnection("c3", bhid1, hid1);
-        BiasUnit bout0 = new BiasUnit("bout0");
+        BiasUnit bout0 = new BiasUnit("bout0", 1.0);
         SigmoidLayer out0 = new SigmoidLayer("out0", 3);
         Connection c4 = new FullConnection("c4", bout0, out0);
         Connection c5 = new FullConnection("c5", hid1, out0);

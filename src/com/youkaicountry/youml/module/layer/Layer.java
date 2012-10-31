@@ -1,5 +1,6 @@
-package com.youkaicountry.youml.module;
+package com.youkaicountry.youml.module.layer;
 
+import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.parameter.ParameterVector;
 
 public abstract class Layer extends Module

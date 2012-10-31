@@ -1,5 +1,6 @@
-package com.youkaicountry.youml.module;
+package com.youkaicountry.youml.module.layer;
 
+import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.parameter.NullVector;
 
 public class PassThroughLayer extends Module

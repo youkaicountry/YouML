@@ -1,6 +1,7 @@
-package com.youkaicountry.youml.module;
+package com.youkaicountry.youml.module.layer;
 import java.lang.Math;
 
+import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.parameter.NullVector;
 
 public class SigmoidLayer extends Module
