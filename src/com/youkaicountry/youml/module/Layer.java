@@ -1,21 +1,19 @@
 package com.youkaicountry.youml.module;
 
-public class Layer extends Module
+import com.youkaicountry.youml.parameter.ParameterVector;
+
+public abstract class Layer extends Module
 {
+    public Layer(String name, int input_dim, int output_dim, ParameterVector pv)
+    {
+        super(name, input_dim, output_dim, pv);
+        return;
+    }
     
-
-    @Override
-    public void forwardProp(double[] input, double[] output)
+    public Layer(String name)
     {
-        // TODO Auto-generated method stub
-
+        super(name);
+        return;
     }
-
-    @Override
-    public void backProp()
-    {
-        // TODO Auto-generated method stub
-
-    }
-
+    
 }

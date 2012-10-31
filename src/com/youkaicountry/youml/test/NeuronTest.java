@@ -38,7 +38,7 @@ public class NeuronTest
         
         for (int i = 0; i < s.output_buffer.length; i++)
         {
-            assertEquals(s.output_buffer[i], cases_out[i], .000001);
+            assertEquals(cases_out[i], s.output_buffer[i], .000001);
         }
         //fail("Not yet implemented");
         return;
