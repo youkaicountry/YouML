@@ -41,10 +41,10 @@ public abstract class Module extends SingleCaseVector
         this.setParameterVector(pv);
         this.input_dim = input_dim;
         this.output_dim = output_dim;
-        this.input_buffer = null;
-        this.output_buffer = new double[output_dim];
-        this.input_error_buffer = null;
-        this.output_error_buffer = new double[output_dim];
+        //this.input_buffer = null;
+        //this.output_buffer = new double[output_dim];
+        //this.input_error_buffer = null;
+        //this.output_error_buffer = new double[output_dim];
         return;
     }
     
@@ -54,11 +54,30 @@ public abstract class Module extends SingleCaseVector
         return;
     }
     
-    public void activate(double[] input)
+    public void activate(double[] output)
     {
         //TODO: ensure input is the length of input_dim
-        this.input_buffer = input;
+        this.output_buffer = output;
         this.step();
+        return;
+    }
+    
+    public void setBuffers(double[] input, double[] output)
+    {
+        this.setInput(input);
+        this.setOutput(output);
+        return;
+    }
+    
+    public void setInput(double[] input)
+    {
+        this.input_buffer = input;
+        return;
+    }
+    
+    public void setOutput(double[] input)
+    {
+        this.input_buffer = input;
         return;
     }
     

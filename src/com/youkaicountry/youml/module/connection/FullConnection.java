@@ -13,8 +13,13 @@ public class FullConnection extends Connection
     @Override
     public void forwardProp(double[] input, double[] output)
     {
-        // TODO Auto-generated method stub
-
+        for (int i = 0; i < this.input_dim; i++)
+        {
+            for (int j = 0; j < this.output_dim; j++)
+            {
+                output[j] += input[i] * this.getParam(i);
+            }
+        }
     }
 
     @Override

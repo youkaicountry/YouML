@@ -13,8 +13,15 @@ public class FeedForwardNetwork extends Network
     @Override
     public void forwardProp(double[] input, double[] output)
     {
-        // TODO Auto-generated method stub
-
+        for (int i = 0; i < this.graph.input_modules.length; i++)
+        {
+            this.graph.input_modules[i].setInput(input);
+            this.graph.input_modules[i].step();
+        }
+        for (int i = 0; i < this.graph.sorted_modules.length; i++)
+        {
+            this.graph.sorted_modules[i].step();
+        }
     }
 
     @Override

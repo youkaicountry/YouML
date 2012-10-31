@@ -10,9 +10,9 @@ import com.youkaicountry.youml.module.connection.Connection;
 
 public class NetGraph
 {
-    private Module[] input_modules;
-    private Module[] hidden_modules;
-    private Module[] output_modules;
+    public Module[] input_modules;
+    public Module[] hidden_modules;
+    public Module[] output_modules;
     public Module[] sorted_modules;
     
     private Module[] edges;

@@ -15,7 +15,7 @@ public class SigmoidLayer extends Module
     @Override
     public void forwardProp(double[] input, double[] output)
     {
-        for (int i = 0; i < input.length; i++)
+        for (int i = 0; i < this.input_dim; i++)
         {
             output[i] = 1.0/(1.0+Math.exp(-input[i]));
         }

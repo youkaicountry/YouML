@@ -43,6 +43,11 @@ public abstract class Network extends Module
         }
         this.moduleInit(input_size, output_size, new MultiCaseVector(pvl, this));
         
+        //Now set the input and output pointers of each module
+        // Each module just has its own input and output used,
+        // Each connection only has pointers
+        
+        
     }
 
 }
