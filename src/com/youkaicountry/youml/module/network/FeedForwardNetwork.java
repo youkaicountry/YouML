@@ -22,6 +22,11 @@ public class FeedForwardNetwork extends Network
         {
             this.graph.sorted_modules[i].step();
         }
+        for (int i = 0; i < this.graph.output_modules.length; i++)
+        {
+            this.graph.output_modules[i].setOutput(output);
+            this.graph.output_modules[i].step();
+        }
     }
 
     @Override

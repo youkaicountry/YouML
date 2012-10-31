@@ -58,5 +58,23 @@ public abstract class Network extends Module
         }
         return;
     }
+    
+    @Override
+    public void clearBuffers()
+    {
+        for (int i = 0; i < this.graph.input_modules.length; i++)
+        {
+            this.graph.input_modules[i].clearBuffers();
+        }
+        for (int i = 0; i < this.graph.hidden_modules.length; i++)
+        {
+            this.graph.hidden_modules[i].clearBuffers();
+        }
+        for (int i = 0; i < this.graph.output_modules.length; i++)
+        {
+            this.graph.output_modules[i].clearBuffers();
+        }
+        return;
+    }
 
 }

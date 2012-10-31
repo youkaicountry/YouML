@@ -62,6 +62,12 @@ public abstract class Module extends SingleCaseVector
         return;
     }
     
+    public void clearBuffers()
+    {
+        Arrays.fill(this.input_buffer, 0);
+        Arrays.fill(this.output_buffer, 0);
+    }
+    
     public void step()
     {
         this.forwardProp(this.input_buffer, this.output_buffer);

@@ -5,6 +5,7 @@ import com.youkaicountry.youml.parameter.NullVector;
 
 public class PassThroughLayer extends Module
 {
+    //TODO: Just have input_buffer and output_buffer point to the same thing
     public PassThroughLayer(String name, int neurons)
     {
         super(name);
@@ -15,8 +16,10 @@ public class PassThroughLayer extends Module
     @Override
     public void forwardProp(double[] input, double[] output)
     {
-        // TODO Auto-generated method stub
-
+        for (int i = 0; i < this.input_dim; i++)
+        {
+            output[i] = input[i];
+        }
     }
 
     @Override

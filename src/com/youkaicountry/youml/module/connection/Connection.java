@@ -10,9 +10,15 @@ public abstract class Connection extends Module
     public Connection(String name, Module module_a, Module module_b, int parameters)
     {
         super(name);
-        this.moduleInit(module_a.output_dim, module_a.input_buffer, module_b.input_dim, module_b.input_buffer, new SingleVector(parameters, this));
+        this.moduleInit(module_a.output_dim, module_a.output_buffer, module_b.input_dim, module_b.input_buffer, new SingleVector(parameters, this));
         this.module_a = module_a;
         this.module_b = module_b;
+        return;
+    }
+    
+    @Override
+    public void clearBuffers()
+    {
         return;
     }
     
