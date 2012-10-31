@@ -8,7 +8,7 @@ import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.module.connection.Connection;
 import com.youkaicountry.youml.module.connection.FullConnection;
-import com.youkaicountry.youml.module.layer.PassThroughLayer;
+import com.youkaicountry.youml.module.layer.LinearLayer;
 import com.youkaicountry.youml.module.layer.SigmoidLayer;
 import com.youkaicountry.youml.module.network.FeedForwardNetwork;
 import com.youkaicountry.youml.module.network.Network;
@@ -88,7 +88,7 @@ public class NetworkTest
     public void test_feed_forward_network()
     {
         //construct a simple 2 hidden layer feed-forward network
-        PassThroughLayer inp0 = new PassThroughLayer("inp0", 2);
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
         BiasUnit bhid0 = new BiasUnit("bhid0", 1.0);
         SigmoidLayer hid0 = new SigmoidLayer("hid0", 8);
         Connection c0 = new FullConnection("c0", inp0, hid0);
@@ -109,25 +109,44 @@ public class NetworkTest
         //8 for bias 0, 8 for bias 1, 3 for bias 2
         //16, 64, 24 for the connections
         assertEquals(123, n.size());
+        for (int i = 0; i < n.size(); i++)
+        {
+            n.setParam(i, 1.0);
+        }
+        n.clearBuffers();
+        n.activate(new double[] {1.5, 1.0});
+        for (int i = 0; i < n.output_dim; i++)
+        {
+            System.out.println(n.output_buffer[i]);
+        }
         return;
     }
     
     @Test
     public void test_perceptron()
     {
-        PassThroughLayer inp0 = new PassThroughLayer("inp0", 2);
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
         SigmoidLayer out0 = new SigmoidLayer("out0", 2);
         Connection c0 = new FullConnection("c0", inp0, out0);
         Module[] inputs = new Module[] {inp0};
         Module[] hidden = new Module[] {c0};
         Module[] outputs = new Module[] {out0};
-        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        FeedForwardNetwork n0 = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
         //First small tests case should is all weights 1, all inputs 1
         double[] tc0 = new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, sigmoid(2.0), sigmoid(2.0)};
-        testCase(tc0, n, 0.0);
+        testCase(tc0, n0, 0.0);
         double[] tc1 = new double[] {.1, .2, .3, .4, .8, .6, sigmoid(.8*.1+.6*.3), sigmoid(.8*.2+.6*.4)};
-        testCase(tc1, n, 0.0);
-        
+        testCase(tc1, n0, 0.0);
+        //Now add a bias unit and create a new network
+        BiasUnit b0 = new BiasUnit("bias", 1.0);
+        Connection c1 = new FullConnection("c1", b0, out0);
+        inputs = new Module[] {inp0};
+        hidden = new Module[] {c0, b0, c1};
+        outputs = new Module[] {out0};
+        FeedForwardNetwork n1 = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        double[] tc2 = new double[] {.1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
+        testCase(tc2, n1, 0.0);
+        return;
     }
     
     //A test case looks like:

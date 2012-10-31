@@ -8,7 +8,7 @@ import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.module.connection.Connection;
 import com.youkaicountry.youml.module.connection.FullConnection;
-import com.youkaicountry.youml.module.layer.PassThroughLayer;
+import com.youkaicountry.youml.module.layer.LinearLayer;
 import com.youkaicountry.youml.module.layer.SigmoidLayer;
 import com.youkaicountry.youml.netgraph.NetGraph;
 
