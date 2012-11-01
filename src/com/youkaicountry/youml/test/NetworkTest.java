@@ -8,6 +8,7 @@ import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.module.connection.Connection;
 import com.youkaicountry.youml.module.connection.FullConnection;
+import com.youkaicountry.youml.module.connection.IdentityConnection;
 import com.youkaicountry.youml.module.layer.LinearLayer;
 import com.youkaicountry.youml.module.layer.SigmoidLayer;
 import com.youkaicountry.youml.module.layer.ThresholdLayer;
@@ -123,28 +124,32 @@ public class NetworkTest
     @Test
     public void test_perceptron()
     {
-        LinearLayer inp0 = new LinearLayer("inp0", 2);
-        SigmoidLayer out0 = new SigmoidLayer("out0", 2);
-        Connection c0 = new FullConnection("c0", inp0, out0);
-        Module[] inputs = new Module[] {inp0};
-        Module[] hidden = new Module[] {c0};
-        Module[] outputs = new Module[] {out0};
-        FeedForwardNetwork n0 = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        Module n0 = makeSigmoidPerceptron();
         //First small tests case should is all weights 1, all inputs 1
         double[] tc0 = new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, sigmoid(2.0), sigmoid(2.0)};
         testCase(tc0, n0, 0.0);
         double[] tc1 = new double[] {.1, .2, .3, .4, .8, .6, sigmoid(.8*.1+.6*.3), sigmoid(.8*.2+.6*.4)};
         testCase(tc1, n0, 0.0);
         //Now add a bias unit and create a new network
-        BiasUnit b0 = new BiasUnit("bias", 1.0);
-        Connection c1 = new FullConnection("c1", b0, out0);
-        inputs = new Module[] {inp0};
-        hidden = new Module[] {c0, b0, c1};
-        outputs = new Module[] {out0};
-        FeedForwardNetwork n1 = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        Module n1 = makeBiasedSigmoidPerceptron();
         double[] tc2 = new double[] {.1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
         testCase(tc2, n1, 0.0);
         return;
+    }
+    
+    @Test
+    public void test_multi_network()
+    {
+        //Just make a perceptron encased, and call it.
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
+        Module out0 = makeBiasedSigmoidPerceptron();
+        Connection c0 = new IdentityConnection("c0", inp0, out0);
+        Module[] inputs = new Module[] {inp0};
+        Module[] hidden = new Module[] {c0};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn2", inputs, hidden, outputs);
+        double[] tc = new double[] {1.0, 1.0, 1.0, 1.0, .1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
+        testCase(tc, n, 0.0);
     }
     
     @Test
@@ -209,6 +214,32 @@ public class NetworkTest
     private double sigmoid(double z)
     {
         return 1.0/(1.0+Math.exp(-z));
+    }
+    
+    private Module makeSigmoidPerceptron()
+    {
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
+        SigmoidLayer out0 = new SigmoidLayer("out0", 2);
+        Connection c0 = new FullConnection("c0", inp0, out0);
+        Module[] inputs = new Module[] {inp0};
+        Module[] hidden = new Module[] {c0};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        return n;
+    }
+    
+    private Module makeBiasedSigmoidPerceptron()
+    {
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
+        SigmoidLayer out0 = new SigmoidLayer("out0", 2);
+        Connection c0 = new FullConnection("c0", inp0, out0);
+        BiasUnit b0 = new BiasUnit("bias", 1.0);
+        Connection c1 = new FullConnection("c1", b0, out0);
+        Module[] inputs = new Module[] {inp0};
+        Module[] hidden = new Module[] {c0, b0, c1};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        return n;
     }
     
     private void print_params(Module mod)
