@@ -18,7 +18,7 @@ public class SigmoidLayer extends Module
     {
         for (int i = 0; i < this.input_dim; i++)
         {
-            output[i] = 1.0/(1.0+Math.exp(-input[i]));
+            output[i+this.output_offset] = 1.0/(1.0+Math.exp(-input[i+this.input_offset]));
         }
     }
 
@@ -27,5 +27,4 @@ public class SigmoidLayer extends Module
     {
         // TODO Auto-generated method stub
     }
-
 }

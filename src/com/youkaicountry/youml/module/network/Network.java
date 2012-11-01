@@ -48,14 +48,14 @@ public abstract class Network extends Module
         // Each connection only has pointers
         
         //changing these might cause problems if what they are pointing to is changed?
-        for (int i = 0; i < input_modules.length; i++)
+        /*for (int i = 0; i < input_modules.length; i++)
         {
             input_modules[i].setInput(this.input_buffer);
         }
         for (int i = 0; i < output_modules.length; i++)
         {
             output_modules[i].setOutput(this.output_buffer);
-        }
+        }*/
         return;
     }
     

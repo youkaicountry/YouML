@@ -16,7 +16,9 @@ public abstract class Module extends SingleCaseVector
     public double[] output_error_buffer;
     
     public int input_dim;
+    public int input_offset = 0;
     public int output_dim;
+    public int output_offset = 0;
     
     public String name;
     
@@ -36,12 +38,12 @@ public abstract class Module extends SingleCaseVector
         this.name = name;
     }
     
-    public void moduleInit(int input_dim, double[] input_buffer, int output_dim, double[] output_buffer, ParameterVector pv)
+    public void moduleInit(int input_dim, double[] input_buffer, int input_offset, int output_dim, double[] output_buffer, int output_offset, ParameterVector pv)
     {
         this.setParameterVector(pv);
         this.input_dim = input_dim;
         this.output_dim = output_dim;
-        this.setBuffers(input_buffer, output_buffer);
+        this.setBuffers(input_buffer, input_offset, output_buffer, output_offset);
         //this.input_buffer = null;
         //this.output_buffer = new double[output_dim];
         //this.input_error_buffer = null;
@@ -54,7 +56,7 @@ public abstract class Module extends SingleCaseVector
         this.setParameterVector(pv);
         this.input_dim = input_dim;
         this.output_dim = output_dim;
-        this.setBuffers(new double[input_dim], new double[output_dim]);
+        this.setBuffers(new double[input_dim], 0, new double[output_dim], 0);
         //this.input_buffer = null;
         //this.output_buffer = new double[output_dim];
         //this.input_error_buffer = null;
@@ -82,21 +84,23 @@ public abstract class Module extends SingleCaseVector
         return;
     }
     
-    public void setBuffers(double[] input, double[] output)
+    public void setBuffers(double[] input, int input_offset, double[] output, int output_offset)
     {
-        this.setInput(input);
-        this.setOutput(output);
+        this.setInput(input, input_offset);
+        this.setOutput(output, output_offset);
         return;
     }
     
-    public void setInput(double[] input)
+    public void setInput(double[] input, int input_offset)
     {
+        this.input_offset = input_offset;
         this.input_buffer = input;
         return;
     }
     
-    public void setOutput(double[] input)
+    public void setOutput(double[] input, int output_offset)
     {
+        this.output_offset = output_offset;
         this.output_buffer = input;
         return;
     }

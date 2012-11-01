@@ -17,7 +17,7 @@ public class BiasUnit extends Module
     @Override
     public void forwardProp(double[] input, double[] output)
     {
-        output[0] = value;
+        output[this.output_offset] = value;
         return;
     }
 
@@ -27,5 +27,4 @@ public class BiasUnit extends Module
         // TODO Auto-generated method stub
 
     }
-
 }

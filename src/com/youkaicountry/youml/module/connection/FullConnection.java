@@ -4,9 +4,15 @@ import com.youkaicountry.youml.module.Module;
 
 public class FullConnection extends Connection
 {
+    public FullConnection(String name, Module module_a, int a_offset, Module module_b, int b_offset)
+    {
+        super(name, module_a, a_offset, module_b, b_offset, module_a.output_dim*module_b.input_dim);
+        return;
+    }
+    
     public FullConnection(String name, Module module_a, Module module_b)
     {
-        super(name, module_a, module_b, module_a.output_dim*module_b.input_dim);
+        super(name, module_a, 0, module_b, 0, module_a.output_dim*module_b.input_dim);
         return;
     }
     

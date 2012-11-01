@@ -17,7 +17,7 @@ public class TanHLayer extends Layer
     {
         for (int i = 0; i < this.input_dim; i++)
         {
-            output[i] = Math.tanh(input[i]);
+            output[i+this.output_offset] = Math.tanh(input[i+this.input_offset]);
         }
         return;
     }
@@ -26,7 +26,5 @@ public class TanHLayer extends Layer
     public void backProp()
     {
         // TODO Auto-generated method stub
-
     }
-
 }
