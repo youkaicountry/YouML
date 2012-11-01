@@ -10,6 +10,7 @@ import com.youkaicountry.youml.module.connection.Connection;
 import com.youkaicountry.youml.module.connection.FullConnection;
 import com.youkaicountry.youml.module.layer.LinearLayer;
 import com.youkaicountry.youml.module.layer.SigmoidLayer;
+import com.youkaicountry.youml.module.layer.ThresholdLayer;
 import com.youkaicountry.youml.module.network.FeedForwardNetwork;
 import com.youkaicountry.youml.module.network.Network;
 import com.youkaicountry.youml.netgraph.NetGraph;
@@ -115,10 +116,7 @@ public class NetworkTest
         }
         n.clearBuffers();
         n.activate(new double[] {1.5, 1.0});
-        for (int i = 0; i < n.output_dim; i++)
-        {
-            System.out.println(n.output_buffer[i]);
-        }
+        
         return;
     }
     
@@ -146,6 +144,38 @@ public class NetworkTest
         FeedForwardNetwork n1 = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
         double[] tc2 = new double[] {.1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
         testCase(tc2, n1, 0.0);
+        return;
+    }
+    
+    @Test
+    public void test_xor()
+    {
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
+        BiasUnit b0 = new BiasUnit("bias0", 1.0);
+        BiasUnit b1 = new BiasUnit("bias1", 1.0);
+        BiasUnit b2 = new BiasUnit("bias2", 1.0);
+        ThresholdLayer t0 = new ThresholdLayer("t0", 1, 0.0);
+        ThresholdLayer t1 = new ThresholdLayer("t1", 1, 0.0);
+        ThresholdLayer out0 = new ThresholdLayer("out0", 1, 0.0);
+        Connection c0 = new FullConnection("c0", inp0, t0);
+        Connection c1 = new FullConnection("c1", inp0, t1);
+        Connection c2 = new FullConnection("c2", t0, out0);
+        Connection c3 = new FullConnection("c3", t1, out0);
+        Connection c4 = new FullConnection("c4", b0, t0);
+        Connection c5 = new FullConnection("c5", b1, t1);
+        Connection c6 = new FullConnection("c6", b2, out0);
+        Module[] inputs = new Module[] {inp0};
+        Module[] hidden = new Module[] {c0, c1, c2, c3, c4, c5, c6, b0, b1, b2, t0, t1};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        double[] tc0 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 1.0, 1.0, 0.0};
+        testCase(tc0, n, 0.0);
+        double[] tc1 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 0.0, 1.0, 1.0};
+        testCase(tc1, n, 0.0);
+        double[] tc2 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 1.0, 0.0, 1.0};
+        testCase(tc2, n, 0.0);
+        double[] tc3 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 0.0, 0.0, 0.0};
+        testCase(tc3, n, 0.0);
         return;
     }
     
@@ -180,5 +210,34 @@ public class NetworkTest
     {
         return 1.0/(1.0+Math.exp(-z));
     }
-
+    
+    private void print_params(Module mod)
+    {
+        System.out.println(mod.name + " params");
+        for (int i = 0; i < mod.size(); i++)
+        {
+            System.out.println(mod.getParam(i));
+        }
+        return;
+    }
+    
+    private void print_out(Module mod)
+    {
+        System.out.println(mod.name);
+        for (int i = 0; i < mod.output_dim; i++)
+        {
+            System.out.println(mod.output_buffer[i]);
+        }
+        return;
+    }
+    
+    private void print_in(Module mod)
+    {
+        System.out.println(mod.name);
+        for (int i = 0; i < mod.input_dim; i++)
+        {
+            System.out.println(mod.input_buffer[i]);
+        }
+        return;
+    }
 }
