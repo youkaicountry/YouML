@@ -22,7 +22,7 @@ public class IdentityConnection extends Connection
     {
         for (int i = 0; i < this.input_dim; i++)
         {
-            output[i] = input[i] * this.getParam(i);
+            output[i+this.output_offset] = input[i+this.input_offset] * this.getParam(i);
         }
         return;
     }

@@ -152,6 +152,21 @@ public class NetworkTest
         testCase(tc, n, 0.0);
     }
     
+    /*@Test
+    public void test_connection_io()
+    {
+      //Just make a perceptron encased, and call it.
+        Module out0 = makeBiasedSigmoidPerceptron();
+        Connection c0 = new IdentityConnection("c0", inp0, out0);
+        Module[] inputs = new Module[] {c0};
+        Module[] hidden = new Module[] {};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn2", inputs, hidden, outputs);
+        double[] tc = new double[] {1.0, 1.0, 1.0, 1.0, .1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
+        testCase(tc, n, 0.0);
+        return;
+    }*/
+    
     @Test
     public void test_xor()
     {

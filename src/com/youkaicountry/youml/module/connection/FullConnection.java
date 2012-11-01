@@ -24,7 +24,7 @@ public class FullConnection extends Connection
         {
             for (int j = 0; j < this.output_dim; j++)
             {
-                output[j] += input[i] * this.getParam(param);
+                output[j+this.output_offset] += input[i+this.input_offset] * this.getParam(param);
                 param++;
             }
         }
