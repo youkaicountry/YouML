@@ -31,13 +31,36 @@ public class FeedForwardNetwork extends Network
             this.graph.output_modules[i].step();
             outmod_output_offset += this.graph.output_modules[i].output_dim;
         }
+        return;
     }
 
     @Override
     public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
-        // TODO Auto-generated method stub
-
+        int outmod_output_offset = 0 + this.output_offset;
+        int outerr_outerr_offset = 0 + this.outerr_offset;
+        for (int i = 0; i < this.graph.output_modules.length; i++)
+        {
+            this.graph.output_modules[i].setErrorOutput(outerr, outerr_outerr_offset);
+            this.graph.output_modules[i].setOutput(output, outmod_output_offset);
+            this.graph.output_modules[i].step();
+            outmod_output_offset += this.graph.output_modules[i].output_dim;
+            outerr_outerr_offset += this.graph.output_modules[i].output_dim;
+        }
+        for (int i = 0; i < this.graph.sorted_modules.length; i++)
+        {
+            this.graph.sorted_modules[i].step();
+        }
+        int inpmod_input_offset = 0 + this.input_offset;
+        int inerr_inerr_offset = 0 + this.inerr_offset;
+        for (int i = 0; i < this.graph.input_modules.length; i++)
+        {
+            this.graph.input_modules[i].setInput(input, inpmod_input_offset);
+            this.graph.input_modules[i].setErrorInput(inerr, inerr_inerr_offset);
+            this.graph.input_modules[i].step();
+            inpmod_input_offset += this.graph.input_modules[i].input_dim;
+            inerr_inerr_offset += this.graph.input_modules[i].input_dim;
+        }
+        return;
     }
-
 }

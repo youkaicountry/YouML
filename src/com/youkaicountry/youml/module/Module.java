@@ -72,6 +72,8 @@ public abstract class Module extends SingleCaseVector
     {
         Arrays.fill(this.input_buffer, 0);
         Arrays.fill(this.output_buffer, 0);
+        Arrays.fill(this.input_error_buffer, 0);
+        Arrays.fill(this.output_error_buffer, 0);
     }
     
     public void step()
@@ -80,11 +82,24 @@ public abstract class Module extends SingleCaseVector
         return;
     }
     
+    public void backStep()
+    {
+        this.backProp(this.output_error_buffer, this.input_error_buffer, this.output_buffer, this.input_buffer);
+        return;
+    }
+    
     public void activate(double[] input)
     {
-        //TODO: ensure input is the length of input_dim
+        //TODO: ensure input is >= the length of input_dim
         this.input_buffer = input;
         this.step();
+        return;
+    }
+    
+    public void backtivate(double[] outerr)
+    {
+        this.output_error_buffer = outerr;
+        this.backStep();
         return;
     }
     

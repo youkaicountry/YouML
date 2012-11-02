@@ -4,13 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.youkaicountry.youml.module.BiasUnit;
-import com.youkaicountry.youml.module.Module;
-import com.youkaicountry.youml.module.connection.Connection;
-import com.youkaicountry.youml.module.connection.FullConnection;
 import com.youkaicountry.youml.module.layer.LinearLayer;
 import com.youkaicountry.youml.module.layer.SigmoidLayer;
-import com.youkaicountry.youml.netgraph.NetGraph;
 
 public class NeuronTest
 {

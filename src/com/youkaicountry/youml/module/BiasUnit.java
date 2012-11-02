@@ -24,7 +24,7 @@ public class BiasUnit extends Module
     @Override
     public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
-        // TODO Auto-generated method stub
-
+        //do nothing.
+        return;
     }
 }
