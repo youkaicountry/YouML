@@ -224,6 +224,7 @@ public class NetworkTest
             n.setParam(i, (n.getDeriv(i)*lr)+n.getParam(i));
         }
         n.clearBuffers();
+        n.clearDerivs(0.0);
         n.activate(new double[] {1.0, 1.0});
         error = new double[] {(sigmoid(2.0)-n.output_buffer[0]), (sigmoid(2.0)-n.output_buffer[0])};
         print_array(error); //error has in fact decreased...

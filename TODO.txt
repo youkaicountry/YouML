@@ -1,0 +1,3 @@
+Have weights init to normal distribution, or to (sqrt?) of fan in whatever.
+
+

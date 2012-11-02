@@ -38,4 +38,16 @@ public class NullVector extends ParameterVector
         return 0;
     }
 
+    @Override
+    public void clearParams(double val)
+    {
+        return;
+    }
+
+    @Override
+    public void clearDerivs(double val)
+    {
+        return;
+    }
+
 }
