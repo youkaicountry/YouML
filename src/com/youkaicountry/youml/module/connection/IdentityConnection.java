@@ -5,15 +5,15 @@ import com.youkaicountry.youml.module.Module;
 public class IdentityConnection extends Connection
 {
     //TODO: Throw an exception if the 2 buffers being connected aren't the same size
-    public IdentityConnection(String name, Module module_a, int a_offset, Module module_b, int b_offset)
+    public IdentityConnection(String name, Module module_a, int a_offset, int a_erroffset, Module module_b, int b_offset, int b_erroffset)
     {
-        super(name, module_a, a_offset, module_b, b_offset, module_a.output_dim*module_b.input_dim);
+        super(name, module_a, a_offset, a_erroffset, module_b, b_offset, b_erroffset, module_a.output_dim*module_b.input_dim);
         return;
     }
     
     public IdentityConnection(String name, Module module_a, Module module_b)
     {
-        super(name, module_a, 0, module_b, 0, module_a.output_dim*module_b.input_dim);
+        super(name, module_a, 0, 0, module_b, 0, 0, module_a.output_dim*module_b.input_dim);
         return;
     }
 
@@ -28,7 +28,7 @@ public class IdentityConnection extends Connection
     }
 
     @Override
-    public void backProp()
+    public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
         // TODO Auto-generated method stub
 

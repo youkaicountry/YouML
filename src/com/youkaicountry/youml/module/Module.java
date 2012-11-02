@@ -17,8 +17,10 @@ public abstract class Module extends SingleCaseVector
     
     public int input_dim;
     public int input_offset = 0;
+    public int inerr_offset = 0;
     public int output_dim;
     public int output_offset = 0;
+    public int outerr_offset = 0;
     
     public String name;
     
@@ -38,12 +40,13 @@ public abstract class Module extends SingleCaseVector
         this.name = name;
     }
     
-    public void moduleInit(int input_dim, double[] input_buffer, int input_offset, int output_dim, double[] output_buffer, int output_offset, ParameterVector pv)
+    public void moduleInit(int input_dim, double[] input_buffer, int input_offset, double[] inerr, int inerr_offset, int output_dim, double[] output_buffer, int output_offset, double[] outerr, int outerr_offset, ParameterVector pv)
     {
         this.setParameterVector(pv);
         this.input_dim = input_dim;
         this.output_dim = output_dim;
         this.setBuffers(input_buffer, input_offset, output_buffer, output_offset);
+        this.setErrorBuffers(inerr, inerr_offset, outerr, outerr_offset);
         //this.input_buffer = null;
         //this.output_buffer = new double[output_dim];
         //this.input_error_buffer = null;
@@ -57,6 +60,7 @@ public abstract class Module extends SingleCaseVector
         this.input_dim = input_dim;
         this.output_dim = output_dim;
         this.setBuffers(new double[input_dim], 0, new double[output_dim], 0);
+        this.setErrorBuffers(new double[input_dim], 0, new double[output_dim], 0);
         //this.input_buffer = null;
         //this.output_buffer = new double[output_dim];
         //this.input_error_buffer = null;
@@ -84,6 +88,27 @@ public abstract class Module extends SingleCaseVector
         return;
     }
     
+    public void setErrorBuffers(double[] inerr, int inerr_offset, double[] outerr, int outerr_offset)
+    {
+        this.setErrorInput(inerr, inerr_offset);
+        this.setErrorOutput(outerr, outerr_offset);
+        return;
+    }
+    
+    public void setErrorInput(double[] inerr, int inerr_offset)
+    {
+        this.inerr_offset = inerr_offset;
+        this.input_error_buffer = inerr;
+        return;
+    }
+    
+    public void setErrorOutput(double[] inerr, int outerr_offset)
+    {
+        this.outerr_offset = output_offset;
+        this.output_error_buffer = inerr;
+        return;
+    }
+    
     public void setBuffers(double[] input, int input_offset, double[] output, int output_offset)
     {
         this.setInput(input, input_offset);
@@ -106,5 +131,5 @@ public abstract class Module extends SingleCaseVector
     }
     
     public abstract void forwardProp(double[] input, double[] output);
-    public abstract void backProp();
+    public abstract void backProp(double[] outerr, double[] inerr, double[] output, double[] input);
 }

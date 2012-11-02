@@ -23,8 +23,14 @@ public class SigmoidLayer extends Module
     }
 
     @Override
-    public void backProp()
+    public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
-        // TODO Auto-generated method stub
+        double val;
+        for (int i = 0; i < this.input_dim; i++)
+        {
+            val = output[i+this.output_offset];
+            inerr[i+this.inerr_offset] = val * (1.0 - val) * outerr[i+this.outerr_offset];
+        }
+        return;
     }
 }

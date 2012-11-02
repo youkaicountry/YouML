@@ -29,7 +29,7 @@ public class SoftmaxLayer extends Layer
     }
 
     @Override
-    public void backProp()
+    public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
         // TODO Auto-generated method stub
     }

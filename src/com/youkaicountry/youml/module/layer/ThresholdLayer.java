@@ -23,7 +23,7 @@ public class ThresholdLayer extends Layer
     }
 
     @Override
-    public void backProp()
+    public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
         // TODO: Raise an exception here... Not sure which one yet
     }
