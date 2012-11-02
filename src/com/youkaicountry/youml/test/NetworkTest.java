@@ -209,13 +209,24 @@ public class NetworkTest
         Module[] hidden = new Module[] {c0};
         Module[] outputs = new Module[] {out0};
         FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
-        n.setParam(0, .3);
-        n.setParam(1, .7);
-        n.setParam(2, .2);
-        n.setParam(3, .5);
+        n.setParam(0, .6);
+        n.setParam(1, .6);
+        n.setParam(2, .6);
+        n.setParam(3, .6);
         n.activate(new double[] {1.0, 1.0});
-        n.backtivate(new double[] { .4, .9});
-        print_inerr(inp0);
+        
+        double[] error = new double[] {(sigmoid(2.0)-n.output_buffer[0]), (sigmoid(2.0)-n.output_buffer[0])};
+        print_array(error);
+        n.backtivate(error);
+        double lr = .3;
+        for (int i = 0; i < n.size(); i++)
+        {
+            n.setParam(i, (n.getDeriv(i)*lr)+n.getParam(i));
+        }
+        n.clearBuffers();
+        n.activate(new double[] {1.0, 1.0});
+        error = new double[] {(sigmoid(2.0)-n.output_buffer[0]), (sigmoid(2.0)-n.output_buffer[0])};
+        print_array(error);
         return;
     }
     
@@ -323,6 +334,15 @@ public class NetworkTest
         for (int i = 0; i < mod.input_dim; i++)
         {
             System.out.println(mod.output_error_buffer[i]);
+        }
+        return;
+    }
+    
+    private void print_array(double[] array)
+    {
+        for (int i = 0; i < array.length; i++)
+        {
+            System.out.println(array[i]);
         }
         return;
     }
