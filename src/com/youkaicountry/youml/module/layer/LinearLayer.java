@@ -25,8 +25,10 @@ public class LinearLayer extends Module
     @Override
     public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
-        // TODO Auto-generated method stub
-
+        for (int i = 0; i < this.input_dim; i++)
+        {
+            inerr[i+this.inerr_offset] = outerr[i+this.outerr_offset];
+        }
     }
 
 }
