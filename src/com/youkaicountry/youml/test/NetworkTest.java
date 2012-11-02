@@ -199,6 +199,26 @@ public class NetworkTest
         return;
     }
     
+    @Test
+    public void test_back_prop()
+    {
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
+        SigmoidLayer out0 = new SigmoidLayer("out0", 2);
+        Connection c0 = new FullConnection("c0", inp0, out0);
+        Module[] inputs = new Module[] {inp0};
+        Module[] hidden = new Module[] {c0};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        n.setParam(0, .3);
+        n.setParam(1, .7);
+        n.setParam(2, .2);
+        n.setParam(3, .5);
+        n.activate(new double[] {1.0, 1.0});
+        n.backtivate(new double[] { .4, .9});
+        print_inerr(inp0);
+        return;
+    }
+    
     //A test case looks like:
     //param0, param1, ..., inp0, inp1, ..., out0, out1, ...
     private void testCase(double[] test_case, Module mod, double delta_error)
@@ -283,6 +303,26 @@ public class NetworkTest
         for (int i = 0; i < mod.input_dim; i++)
         {
             System.out.println(mod.input_buffer[i]);
+        }
+        return;
+    }
+    
+    private void print_inerr(Module mod)
+    {
+        System.out.println(mod.name);
+        for (int i = 0; i < mod.input_dim; i++)
+        {
+            System.out.println(mod.input_error_buffer[i]);
+        }
+        return;
+    }
+    
+    private void print_outerr(Module mod)
+    {
+        System.out.println(mod.name);
+        for (int i = 0; i < mod.input_dim; i++)
+        {
+            System.out.println(mod.output_error_buffer[i]);
         }
         return;
     }

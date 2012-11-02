@@ -43,13 +43,13 @@ public class FeedForwardNetwork extends Network
         {
             this.graph.output_modules[i].setErrorOutput(outerr, outerr_outerr_offset);
             this.graph.output_modules[i].setOutput(output, outmod_output_offset);
-            this.graph.output_modules[i].step();
+            this.graph.output_modules[i].backStep();
             outmod_output_offset += this.graph.output_modules[i].output_dim;
             outerr_outerr_offset += this.graph.output_modules[i].output_dim;
         }
-        for (int i = 0; i < this.graph.sorted_modules.length; i++)
+        for (int i = this.graph.sorted_modules.length-1; i >=0; i--)
         {
-            this.graph.sorted_modules[i].step();
+            this.graph.sorted_modules[i].backStep();
         }
         int inpmod_input_offset = 0 + this.input_offset;
         int inerr_inerr_offset = 0 + this.inerr_offset;
@@ -57,7 +57,7 @@ public class FeedForwardNetwork extends Network
         {
             this.graph.input_modules[i].setInput(input, inpmod_input_offset);
             this.graph.input_modules[i].setErrorInput(inerr, inerr_inerr_offset);
-            this.graph.input_modules[i].step();
+            this.graph.input_modules[i].backStep();
             inpmod_input_offset += this.graph.input_modules[i].input_dim;
             inerr_inerr_offset += this.graph.input_modules[i].input_dim;
         }
