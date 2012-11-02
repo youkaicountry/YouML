@@ -209,10 +209,10 @@ public class NetworkTest
         Module[] hidden = new Module[] {c0};
         Module[] outputs = new Module[] {out0};
         FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
-        n.setParam(0, .6);
-        n.setParam(1, .6);
-        n.setParam(2, .6);
-        n.setParam(3, .6);
+        n.setParam(0, 1.8);
+        n.setParam(1, 1.8);
+        n.setParam(2, 1.8);
+        n.setParam(3, 1.8);
         n.activate(new double[] {1.0, 1.0});
         
         double[] error = new double[] {(sigmoid(2.0)-n.output_buffer[0]), (sigmoid(2.0)-n.output_buffer[0])};
@@ -226,7 +226,7 @@ public class NetworkTest
         n.clearBuffers();
         n.activate(new double[] {1.0, 1.0});
         error = new double[] {(sigmoid(2.0)-n.output_buffer[0]), (sigmoid(2.0)-n.output_buffer[0])};
-        print_array(error);
+        print_array(error); //error has in fact decreased...
         return;
     }
     
