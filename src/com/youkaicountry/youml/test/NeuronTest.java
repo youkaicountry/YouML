@@ -21,6 +21,25 @@ public class NeuronTest
     }
     
     @Test
+    public void test_linear()
+    {
+        double[] cases_in = {1.0, 2.2, 3.4, 6.0};
+        double[] cases_out = new double[cases_in.length];
+        for (int i = 0; i < cases_out.length; i++)
+        {
+            cases_out[i] = cases_in[i];
+        }
+        LinearLayer l = new LinearLayer("linear", cases_in.length);
+        l.activate(cases_in);
+        
+        for (int i = 0; i < l.output_buffer.length; i++)
+        {
+            assertEquals(l.output_buffer[i], cases_out[i], 0.0);
+        }
+        return;
+    }
+    
+    @Test
     public void test_sigmoid_layer()
     {
         /*
@@ -38,7 +57,7 @@ public class NeuronTest
         
         for (int i = 0; i < s.output_buffer.length; i++)
         {
-            assertEquals(cases_out[i], s.output_buffer[i], .000001);
+            assertEquals(s.output_buffer[i], cases_out[i], .000001);
         }
         //fail("Not yet implemented");
         return;
