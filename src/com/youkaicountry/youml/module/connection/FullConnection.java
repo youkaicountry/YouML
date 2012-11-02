@@ -28,13 +28,27 @@ public class FullConnection extends Connection
                 param++;
             }
         }
+        return;
     }
 
     @Override
     public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
-        // TODO Auto-generated method stub
-
+        int param = 0;
+        double oe;
+        double nd;
+        for (int i = 0; i < this.input_dim; i++)
+        {
+            for (int j = 0; j < this.output_dim; j++)
+            {
+                oe = outerr[j + this.outerr_offset];
+                inerr[i+this.inerr_offset] += oe * this.getParam(param);
+                nd = this.getDeriv(param)+(oe*input[i+this.input_offset]);
+                this.setDeriv(param, nd);
+                param++;
+            }
+        }
+        return;
     }
 
 }

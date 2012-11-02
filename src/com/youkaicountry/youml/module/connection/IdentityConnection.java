@@ -13,7 +13,7 @@ public class IdentityConnection extends Connection
     
     public IdentityConnection(String name, Module module_a, Module module_b)
     {
-        super(name, module_a, 0, 0, module_b, 0, 0, module_a.output_dim*module_b.input_dim);
+        super(name, module_a, 0, 0, module_b, 0, 0, 0);
         return;
     }
 
@@ -22,7 +22,7 @@ public class IdentityConnection extends Connection
     {
         for (int i = 0; i < this.input_dim; i++)
         {
-            output[i+this.output_offset] = input[i+this.input_offset] * this.getParam(i);
+            output[i+this.output_offset] = input[i+this.input_offset];
         }
         return;
     }
@@ -30,8 +30,11 @@ public class IdentityConnection extends Connection
     @Override
     public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
-        // TODO Auto-generated method stub
-
+        for (int i = 0; i < this.input_dim; i++)
+        {
+            inerr[i+this.inerr_offset] += outerr[i+this.outerr_offset];
+        }
+        return;
     }
 
 }

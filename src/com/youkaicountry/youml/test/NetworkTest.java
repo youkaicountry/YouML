@@ -148,7 +148,7 @@ public class NetworkTest
         Module[] hidden = new Module[] {c0};
         Module[] outputs = new Module[] {out0};
         FeedForwardNetwork n = new FeedForwardNetwork("ffn2", inputs, hidden, outputs);
-        double[] tc = new double[] {1.0, 1.0, 1.0, 1.0, .1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
+        double[] tc = new double[] {.1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
         testCase(tc, n, 0.0);
     }
     
