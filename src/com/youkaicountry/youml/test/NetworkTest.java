@@ -122,14 +122,7 @@ public class NetworkTest
         {
             n.setParam(i, r.nextDouble()-0.5);
         }
-        n.clearBuffers();
-        
-        TrainingData td = new TrainingData();
-        td.addCase(new double[] {1.0, 1.0}, new double[] {sigmoid(2.0), sigmoid(2.0)});
-        BackPropTrainer bpt = new BackPropTrainer(n, td, .1);
-        
-        //n.activate(new double[] {1.5, 1.0});
-        
+        n.clearBuffers();        
         return;
     }
     
@@ -233,9 +226,7 @@ public class NetworkTest
         for (int i = 0; i < 1000; i++)
         {
         	bpt.train();
-        	//System.out.println(bpt.train());
         }
-        //System.out.println(bpt.train());
         assertTrue(Math.abs(bpt.train()) < .0001);
         return;
     }
@@ -277,11 +268,8 @@ public class NetworkTest
         for (int i = 0; i < 1000; i++)
         {
         	bpt.train();
-        	//System.out.println(bpt.train());
         }
-        //System.out.println(bpt.train());
         assertTrue(Math.abs(bpt.train()) < .0001);
-        //n.activate(new double[] {1.5, 1.0});
         
         return;
     }
