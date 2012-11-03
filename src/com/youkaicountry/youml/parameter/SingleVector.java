@@ -5,13 +5,15 @@ public class SingleVector extends ParameterVector
     private double[] param_buffer;
     private double[] deriv_buffer;
     private int dim;
+    private boolean derivs;
     
-    public SingleVector(int dim, Object owner)
+    public SingleVector(int dim, boolean derivs, Object owner)
     {
         super(owner);
         this.param_buffer = new double[dim];
-        this.deriv_buffer = new double[dim];
+        if (derivs) {this.deriv_buffer = new double[dim];}
         this.dim = dim;
+        this.derivs = derivs;
         return;
     }
 

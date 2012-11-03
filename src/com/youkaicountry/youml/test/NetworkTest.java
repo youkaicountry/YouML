@@ -2,8 +2,11 @@ package com.youkaicountry.youml.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Random;
+
 import org.junit.Test;
 
+import com.youkaicountry.youml.data.TrainingData;
 import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.module.connection.Connection;
@@ -15,6 +18,7 @@ import com.youkaicountry.youml.module.layer.ThresholdLayer;
 import com.youkaicountry.youml.module.network.FeedForwardNetwork;
 import com.youkaicountry.youml.module.network.Network;
 import com.youkaicountry.youml.netgraph.NetGraph;
+import com.youkaicountry.youml.trainers.BackPropTrainer;
 
 public class NetworkTest
 {
@@ -111,12 +115,62 @@ public class NetworkTest
         //8 for bias 0, 8 for bias 1, 3 for bias 2
         //16, 64, 24 for the connections
         assertEquals(123, n.size());
+        Random r = new Random(1212);
+        
+        
         for (int i = 0; i < n.size(); i++)
         {
-            n.setParam(i, 1.0);
+            n.setParam(i, r.nextDouble()-0.5);
         }
         n.clearBuffers();
-        n.activate(new double[] {1.5, 1.0});
+        
+        TrainingData td = new TrainingData();
+        td.addCase(new double[] {1.0, 1.0}, new double[] {sigmoid(2.0), sigmoid(2.0)});
+        BackPropTrainer bpt = new BackPropTrainer(n, td, .1);
+        
+        //n.activate(new double[] {1.5, 1.0});
+        
+        return;
+    }
+    
+    @Test
+    public void test_backprop_xor()
+    {
+        //construct a simple 2 hidden layer feed-forward network
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
+        BiasUnit bhid0 = new BiasUnit("bhid0", 1.0);
+        SigmoidLayer hid0 = new SigmoidLayer("hid0", 4);
+        Connection c0 = new FullConnection("c0", inp0, hid0);
+        Connection c1 = new FullConnection("c1", bhid0, hid0);
+        BiasUnit bhid1 = new BiasUnit("bhid1", 1.0);
+        SigmoidLayer hid1 = new SigmoidLayer("hid1", 4);
+        Connection c2 = new FullConnection("c2", hid0, hid1);
+        Connection c3 = new FullConnection("c3", bhid1, hid1);
+        BiasUnit bout0 = new BiasUnit("bout0", 1.0);
+        SigmoidLayer out0 = new SigmoidLayer("out0", 1);
+        Connection c4 = new FullConnection("c4", bout0, out0);
+        Connection c5 = new FullConnection("c5", hid1, out0);
+        Module[] inputs = new Module[] {inp0};
+        Module[] hidden = new Module[] {hid0, c1, bhid1, bout0, c0, c5, bhid0, c2, hid1, c4, c3};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        Random r = new Random(1212);
+        for (int i = 0; i < n.size(); i++)
+        {
+            n.setParam(i, r.nextDouble()-0.5);
+        }
+        
+        TrainingData td = new TrainingData();
+        td.addCase(new double[] {1.0, 1.0}, new double[] {0.0});
+        td.addCase(new double[] {1.0, 0.0}, new double[] {1.0});
+        td.addCase(new double[] {0.0, 1.0}, new double[] {1.0});
+        td.addCase(new double[] {0.0, 0.0}, new double[] {0.0});
+        BackPropTrainer bpt = new BackPropTrainer(n, td, .001);
+        for (int i = 0; i < 10000; i++)
+        {
+        	System.out.println(bpt.train());
+        }
+        //n.activate(new double[] {1.5, 1.0});
         
         return;
     }
@@ -150,6 +204,7 @@ public class NetworkTest
         FeedForwardNetwork n = new FeedForwardNetwork("ffn2", inputs, hidden, outputs);
         double[] tc = new double[] {.1, .2, .3, .4, .5, .7, .8, .6, sigmoid(.8*.1+.6*.3+1*.5), sigmoid(.8*.2+.6*.4+1.0*.7)};
         testCase(tc, n, 0.0);
+        
     }
     
     /*@Test
@@ -209,25 +264,22 @@ public class NetworkTest
         Module[] hidden = new Module[] {c0};
         Module[] outputs = new Module[] {out0};
         FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
-        n.setParam(0, 1.8);
-        n.setParam(1, 1.8);
-        n.setParam(2, 1.8);
-        n.setParam(3, 1.8);
-        n.activate(new double[] {1.0, 1.0});
-        
-        double[] error = new double[] {(sigmoid(2.0)-n.output_buffer[0]), (sigmoid(2.0)-n.output_buffer[0])};
-        print_array(error);
-        n.backtivate(error);
-        double lr = .3;
-        for (int i = 0; i < n.size(); i++)
+        n.setParam(0, 1.1);
+        n.setParam(1, 1.24);
+        n.setParam(2, 1.3);
+        n.setParam(3, .2);
+        TrainingData td = new TrainingData();
+        td.addCase(new double[] {1.0, 1.0}, new double[] {sigmoid(2.0), sigmoid(2.0)});
+        BackPropTrainer bpt = new BackPropTrainer(n, td, .1);
+        for (int i = 0; i < 1000; i++)
         {
-            n.setParam(i, (n.getDeriv(i)*lr)+n.getParam(i));
+        	bpt.train();
+        	//System.out.println(bpt.train());
+        	//print_params(n);
         }
-        n.clearBuffers();
-        n.clearDerivs(0.0);
-        n.activate(new double[] {1.0, 1.0});
-        error = new double[] {(sigmoid(2.0)-n.output_buffer[0]), (sigmoid(2.0)-n.output_buffer[0])};
-        print_array(error); //error has in fact decreased...
+        //print_params(n);
+        //print_array(n.output_buffer);
+        //print_array(td.getCaseInput(0));
         return;
     }
     

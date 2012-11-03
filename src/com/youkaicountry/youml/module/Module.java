@@ -82,24 +82,33 @@ public abstract class Module extends SingleCaseVector
         return;
     }
     
+    public void step(double[] input, double[] output)
+    {
+    	this.forwardProp(input, output);
+    	return;
+    }
+    
     public void backStep()
     {
         this.backProp(this.output_error_buffer, this.input_error_buffer, this.output_buffer, this.input_buffer);
         return;
     }
     
+    public void backStep(double[] outerr, double[] inerr, double[] output, double[] input)
+    {
+    	this.backProp(outerr, inerr, output, input);
+    }
+    
     public void activate(double[] input)
     {
         //TODO: ensure input is >= the length of input_dim
-        this.input_buffer = input;
-        this.step();
+        this.step(input, this.output_buffer);
         return;
     }
     
-    public void backtivate(double[] outerr)
+    public void backtivate(double[] outerr, double[] input)
     {
-        this.output_error_buffer = outerr;
-        this.backStep();
+        this.backStep(outerr, this.input_error_buffer, this.output_buffer, input);
         return;
     }
     

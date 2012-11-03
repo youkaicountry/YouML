@@ -18,7 +18,7 @@ public class ParameterTest
     public void test_single_vector()
     {
         int size = 5;
-        SingleVector pv = new SingleVector(size, null);
+        SingleVector pv = new SingleVector(size, true, null);
         baseTest(pv, size);
         testRW(pv, 121212);
         return;
@@ -35,9 +35,9 @@ public class ParameterTest
     @Test 
     public void test_multi_case_vector()
     {
-        SingleVector pv0 = new SingleVector(3, null);
-        SingleVector pv1 = new SingleVector(1, null);
-        SingleVector pv2 = new SingleVector(8, null);
+        SingleVector pv0 = new SingleVector(3, true, null);
+        SingleVector pv1 = new SingleVector(1, true, null);
+        SingleVector pv2 = new SingleVector(8, true, null);
         MultiCaseVector pv = new MultiCaseVector(new ParameterVector[] {pv0, pv1, pv2}, null);
         baseTest(pv, 12);
         testRW(pv, 8765799);
