@@ -35,12 +35,12 @@ public class TrainerTest
         TrainingData td = new TrainingData();
         td.addCase(new double[] {1.0, 1.0}, new double[] {sigmoid(2.0), sigmoid(2.0)});
         BackPropTrainer bpt = new BackPropTrainer(n, td, 1.0);
-        assertTrue(Math.abs(bpt.train()) > .0001);
-        for (int i = 0; i < 1000; i++)
+        double ierror = Math.abs(bpt.train()); //get the error on the training set
+        for (int i = 0; i < 100; i++)
         {
         	bpt.train();
         }
-        assertTrue(Math.abs(bpt.train()) < .0001);
+        assertTrue(Math.abs(bpt.train()) < ierror);
         return;
     }
     
@@ -77,12 +77,12 @@ public class TrainerTest
         td.addCase(new double[] {0.0, 1.0}, new double[] {1.0});
         td.addCase(new double[] {0.0, 0.0}, new double[] {0.0});
         BackPropTrainer bpt = new BackPropTrainer(n, td, .01);
-        assertTrue(Math.abs(bpt.train()) > .0001);
+        double ierror = Math.abs(bpt.train()); //get the error on the training set
         for (int i = 0; i < 1000; i++)
         {
         	bpt.train();
         }
-        assertTrue(Math.abs(bpt.train()) < .0001);
+        assertTrue(Math.abs(bpt.train()) < ierror);
         
         return;
     }
