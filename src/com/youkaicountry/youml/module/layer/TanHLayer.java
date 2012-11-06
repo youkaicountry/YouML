@@ -25,6 +25,12 @@ public class TanHLayer extends Layer
     @Override
     public void backProp(double[] outerr, double[] inerr, double[] output, double[] input)
     {
-        // TODO Auto-generated method stub
+    	double val;
+        for (int i = 0; i < this.input_dim; i++)
+        {
+            val = output[i+this.output_offset];
+            inerr[i+this.inerr_offset] = (1.0 - Math.pow(val, 2.0)) * outerr[i+this.outerr_offset];
+        }
+        return;
     }
 }

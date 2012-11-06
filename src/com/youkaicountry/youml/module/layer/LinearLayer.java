@@ -20,6 +20,7 @@ public class LinearLayer extends Module
         {
             output[i+this.output_offset] = input[i+this.input_offset];
         }
+        return;
     }
 
     @Override
@@ -29,6 +30,7 @@ public class LinearLayer extends Module
         {
             inerr[i+this.inerr_offset] = outerr[i+this.outerr_offset];
         }
+        return;
     }
 
 }
