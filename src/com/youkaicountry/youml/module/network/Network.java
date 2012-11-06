@@ -3,7 +3,6 @@ package com.youkaicountry.youml.module.network;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.netgraph.NetGraph;
 import com.youkaicountry.youml.parameter.MultiCaseVector;
-import com.youkaicountry.youml.parameter.NullVector;
 import com.youkaicountry.youml.parameter.ParameterVector;
 
 public abstract class Network extends Module
@@ -14,7 +13,6 @@ public abstract class Network extends Module
     {
         super(name);
         this.graph = new NetGraph(input_modules, hidden_modules, output_modules);
-        //TODO: track offsets for each input
         int input_size = 0;
         for (int i = 0; i < input_modules.length; i++)
         {
