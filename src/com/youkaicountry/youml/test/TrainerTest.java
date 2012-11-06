@@ -6,7 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import com.youkaicountry.youml.data.TrainingData;
+import com.youkaicountry.youml.data.TrainingBatch;
 import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.module.connection.Connection;
@@ -32,10 +32,10 @@ public class TrainerTest
         n.setParam(1, .1);
         n.setParam(2, .02);
         n.setParam(3, .3);
-        TrainingData td = new TrainingData();
+        TrainingBatch td = new TrainingBatch();
         td.addCase(new double[] {1.0, 1.0}, new double[] {sigmoid(2.0), sigmoid(2.0)});
-        BackPropTrainer bpt = new BackPropTrainer(n, td, .01);
-        testErrorDecreasing(bpt, 100);
+        BackPropTrainer bpt = new BackPropTrainer(n, .01);
+        testErrorDecreasing(bpt, td, 100);
         return;
     }
     
@@ -62,13 +62,13 @@ public class TrainerTest
             n.setParam(i, r.nextDouble()*.5-.25);
         }
         
-        TrainingData td = new TrainingData();
+        TrainingBatch td = new TrainingBatch();
         td.addCase(new double[] {1.0, 1.0}, new double[] {0.0});
         td.addCase(new double[] {1.0, 0.0}, new double[] {1.0});
         td.addCase(new double[] {0.0, 1.0}, new double[] {1.0});
         td.addCase(new double[] {0.0, 0.0}, new double[] {0.0});
-        BackPropTrainer bpt = new BackPropTrainer(n, td, .1);
-        testErrorDecreasing(bpt, 100);
+        BackPropTrainer bpt = new BackPropTrainer(n, .1);
+        testErrorDecreasing(bpt, td, 100);
         return;
     }
     
@@ -77,14 +77,14 @@ public class TrainerTest
         return 1.0/(1.0+Math.exp(-z));
     }
     
-    private void testErrorDecreasing(BackPropTrainer bpt, int iterations)
+    private void testErrorDecreasing(BackPropTrainer bpt, TrainingBatch tb, int iterations)
     {
-    	double ierror = Math.abs(bpt.trainBatch()); //get the error on the training set
+    	double ierror = Math.abs(bpt.trainBatch(tb)); //get the error on the training set
         for (int i = 0; i < iterations; i++)
         {
-        	bpt.trainBatch();
+        	bpt.trainBatch(tb);
         }
-        assertTrue(Math.abs(bpt.trainBatch()) < ierror);
+        assertTrue(Math.abs(bpt.trainBatch(tb)) < ierror);
     	return;
     }
 }

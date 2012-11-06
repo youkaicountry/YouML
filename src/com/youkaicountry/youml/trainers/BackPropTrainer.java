@@ -1,40 +1,36 @@
 package com.youkaicountry.youml.trainers;
 
-import java.util.Arrays;
-
-import com.youkaicountry.youml.data.TrainingData;
+import com.youkaicountry.youml.data.TrainingBatch;
 import com.youkaicountry.youml.module.Module;
 
 //TODO: have a Trainer superclass
 public class BackPropTrainer
 {
-    private TrainingData td;
     public Module m;
     private double learning_rate;
     
-    public BackPropTrainer(Module m, TrainingData td, double learning_rate)
+    public BackPropTrainer(Module m, double learning_rate)
     {
         this.m = m;
-        this.td = td;
         this.learning_rate = learning_rate;
         return;
     }
     
     //trains for 1 epoch
     //returns average error
-    //TODO: Maybe have a method which runs and returns error
-    public double trainBatch()
+    //TODO: Maybe have a method which runs a validation set and returns error
+    public double trainBatch(TrainingBatch tb)
     {
     	double[] error = new double[this.m.output_dim];
-    	double[] set_error = new double[this.td.size()];
+    	double[] set_error = new double[tb.size()];
     	double error_sum = 0;
     	this.m.clearBuffers();
     	this.m.clearDerivs(0.0);
     	error_sum = 0.0;
-        for (int i = 0; i < td.size(); i++)
+        for (int i = 0; i < tb.size(); i++)
         {
-        	double[] ic = this.td.getCaseInput(i);
-        	double[] oc = this.td.getCaseOutput(i);
+        	double[] ic = tb.getCaseInput(i);
+        	double[] oc = tb.getCaseOutput(i);
         	this.m.clearBuffers();
         	//Arrays.fill(error, 0);
         	this.m.activate(ic);
@@ -46,7 +42,7 @@ public class BackPropTrainer
             	//System.out.println(res_error);
             	//System.out.println(m.output_buffer[j]);
             }
-            this.m.backtivate(error, this.td.getCaseInput(0));
+            this.m.backtivate(error, tb.getCaseInput(0));
         }
         
         for (int i = 0; i < this.m.size(); i++)
@@ -60,18 +56,18 @@ public class BackPropTrainer
         return error_sum;
     }
     
-    public double train()
+    public double trainOnline(TrainingBatch tb)
     {
     	double[] error = new double[this.m.output_dim];
-    	double[] set_error = new double[this.td.size()];
+    	double[] set_error = new double[tb.size()];
     	double error_sum = 0;
     	this.m.clearBuffers();
     	this.m.clearDerivs(0.0);
     	error_sum = 0.0;
-        for (int i = 0; i < td.size(); i++)
+        for (int i = 0; i < tb.size(); i++)
         {
-        	double[] ic = this.td.getCaseInput(i);
-        	double[] oc = this.td.getCaseOutput(i);
+        	double[] ic = tb.getCaseInput(i);
+        	double[] oc = tb.getCaseOutput(i);
         	this.m.clearBuffers();
         	this.m.clearDerivs(0.0);
         	//Arrays.fill(error, 0);
@@ -84,7 +80,7 @@ public class BackPropTrainer
             	//System.out.println(res_error);
             	//System.out.println(m.output_buffer[j]);
             }
-            this.m.backtivate(error, this.td.getCaseInput(0));
+            this.m.backtivate(error, tb.getCaseInput(0));
             
             for (int k = 0; k < this.m.size(); k++)
             {

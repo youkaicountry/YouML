@@ -2,13 +2,15 @@ package com.youkaicountry.youml.data;
 
 import java.util.ArrayList;
 
-public class TrainingData
+//TODO: Have a shuffle index function
+
+public class TrainingBatch
 {
     int size = 0;
     private ArrayList<double[]> input_data;
     private ArrayList<double[]> output_data;
     
-    public TrainingData()
+    public TrainingBatch()
     {
     	this.input_data = new ArrayList<double[]>();
     	this.output_data = new ArrayList<double[]>();

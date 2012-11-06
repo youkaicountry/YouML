@@ -6,7 +6,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
-import com.youkaicountry.youml.data.TrainingData;
+import com.youkaicountry.youml.data.TrainingBatch;
 import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.module.connection.Connection;
