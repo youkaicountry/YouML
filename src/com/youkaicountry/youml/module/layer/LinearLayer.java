@@ -3,7 +3,7 @@ package com.youkaicountry.youml.module.layer;
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.parameter.NullVector;
 
-public class LinearLayer extends Module
+public class LinearLayer extends Layer
 {
     //TODO: Just have input_buffer and output_buffer point to the same thing?
     public LinearLayer(String name, int neurons)
