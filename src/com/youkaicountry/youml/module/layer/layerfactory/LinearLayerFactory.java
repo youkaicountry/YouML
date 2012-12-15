@@ -11,6 +11,12 @@ public class LinearLayerFactory extends LayerFactory
 		return;
 	}
 	
+	public LinearLayerFactory(String base_name)
+	{
+		super(base_name);
+		return;
+	}
+	
 	@Override
 	public Layer implBuildLayer(String name, int neurons) 
 	{

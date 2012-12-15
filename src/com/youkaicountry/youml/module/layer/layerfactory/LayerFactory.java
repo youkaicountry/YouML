@@ -15,6 +15,13 @@ public abstract class LayerFactory
 		return;
 	}
 	
+	public LayerFactory(String base_name)
+	{
+		this.base_name = base_name;
+		this.neurons = 1;
+		return;
+	}
+	
 	public Layer buildLayer()
 	{
 		String name = this.base_name + this.loc;
