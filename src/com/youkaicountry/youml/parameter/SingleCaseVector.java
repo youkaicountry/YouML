@@ -40,6 +40,13 @@ public class SingleCaseVector extends ParameterVector
         this.pv.setParam(i, v);
         return;
     }
+    
+    @Override
+    public void addParam(int i, double v)
+    {
+        this.pv.addParam(i, v);
+        return;
+    }
 
     @Override
     public double getDeriv(int i)
@@ -51,6 +58,13 @@ public class SingleCaseVector extends ParameterVector
     public void setDeriv(int i, double v)
     {
         this.pv.setDeriv(i, v);
+        return;
+    }
+    
+    @Override
+    public void addDeriv(int i, double v)
+    {
+        this.pv.addDeriv(i, v);
         return;
     }
 

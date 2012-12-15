@@ -4,6 +4,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
 
+import javax.swing.JFrame;
+
 import org.junit.Test;
 
 import com.youkaicountry.youml.data.TrainingBatch;

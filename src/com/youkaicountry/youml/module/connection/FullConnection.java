@@ -43,8 +43,9 @@ public class FullConnection extends Connection
             {
                 oe = outerr[j + this.outerr_offset];
                 inerr[i+this.inerr_offset] += oe * this.getParam(param);
-                nd = this.getDeriv(param)+(oe*input[i+this.input_offset]);
-                this.setDeriv(param, nd);
+                //nd = this.getDeriv(param)+(oe(oe*input[i+this.input_offset])*input[i+this.input_offset]);
+                //this.setDeriv(param, nd);
+                this.addDeriv(param, (oe*input[i+this.input_offset]));
                 param++;
             }
         }

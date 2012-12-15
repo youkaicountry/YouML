@@ -66,6 +66,16 @@ public class MultiCaseVector extends ParameterVector
         this.pvs[pv_i].setParam(pv_i_i, v);
         return;
     }
+    
+    @Override
+    public void addParam(int i, double v)
+    {
+        int li = i*2;
+        int pv_i = this.pv_lookup[li];
+        int pv_i_i = this.pv_lookup[li+1];
+        this.pvs[pv_i].addParam(pv_i_i, v);
+        return;
+    }
 
     @Override
     public double getDeriv(int i)
@@ -83,6 +93,16 @@ public class MultiCaseVector extends ParameterVector
         int pv_i = this.pv_lookup[li];
         int pv_i_i = this.pv_lookup[li+1];
         this.pvs[pv_i].setDeriv(pv_i_i, v);
+        return;
+    }
+    
+    @Override
+    public void addDeriv(int i, double v)
+    {
+        int li = i*2;
+        int pv_i = this.pv_lookup[li];
+        int pv_i_i = this.pv_lookup[li+1];
+        this.pvs[pv_i].addDeriv(pv_i_i, v);
         return;
     }
 

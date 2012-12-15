@@ -3,23 +3,21 @@ package com.youkaicountry.youml.trainers;
 import com.youkaicountry.youml.data.TrainingBatch;
 import com.youkaicountry.youml.module.Module;
 
-//TODO: have a Trainer superclass
-//TODO: Maybe have a method which runs a validation set and returns error
-public class BackPropTrainer
+public class BackPropTrainer extends Trainer
 {
-    public Module m;
     private double learning_rate;
     
     public BackPropTrainer(Module m, double learning_rate)
     {
-        this.m = m;
+    	super(m);
         this.learning_rate = learning_rate;
         return;
     }
     
     //trains for 1 epoch
     //returns average error
-    public double trainBatch(TrainingBatch tb)
+    @Override
+    public double implTrainBatch(TrainingBatch tb)
     {
     	double[] error = new double[this.m.output_dim];
     	double error_sum = 0;
@@ -44,12 +42,14 @@ public class BackPropTrainer
         for (int i = 0; i < this.m.size(); i++)
         {
         	double dw = this.learning_rate*this.m.getDeriv(i);
-        	this.m.setParam(i, this.m.getParam(i)+dw);
+        	//this.m.setParam(i, this.m.getParam(i)+dw);
+        	this.m.addParam(i, dw);
         }
-        return error_sum;
+        return error_sum / tb.size();
     }
     
-    public double trainOnline(TrainingBatch tb)
+    @Override
+    public double implTrainOnline(TrainingBatch tb)
     {
     	double[] error = new double[this.m.output_dim];
     	double error_sum = 0;
@@ -73,19 +73,13 @@ public class BackPropTrainer
             
             for (int k = 0; k < this.m.size(); k++)
             {
+                // delta weight, this parameter's value of the gradient times
+                // the learning rate
             	double dw = this.learning_rate*this.m.getDeriv(k);
-            	this.m.setParam(k, this.m.getParam(k)+dw);
+            	//this.m.setParam(k, this.m.getParam(k)+dw);
+            	this.m.addParam(i, dw);
             }
         }
-        return error_sum;
-    }
-    
-    private double mean(double[] d) 
-    {
-        double sum = 0;  // sum of all the elements
-        for (int i=0; i<d.length; i++) {
-            sum += d[i];
-        }
-        return sum / d.length;
+        return error_sum / tb.size();
     }
 }

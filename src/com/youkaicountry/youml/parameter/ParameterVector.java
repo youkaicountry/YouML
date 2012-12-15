@@ -43,8 +43,10 @@ public abstract class ParameterVector
     
     public abstract double getParam(int i);
     public abstract void setParam(int i, double v);
+    public abstract void addParam(int i, double v);
     public abstract double getDeriv(int i);
     public abstract void setDeriv(int i, double v);
+    public abstract void addDeriv(int i, double v);
     public abstract int size();
     
 }

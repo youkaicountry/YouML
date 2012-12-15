@@ -19,6 +19,12 @@ public class NullVector extends ParameterVector
     {
         throw new IndexOutOfBoundsException();
     }
+    
+    @Override
+    public void addParam(int i, double v)
+    {
+        throw new IndexOutOfBoundsException();
+    }
 
     @Override
     public double getDeriv(int i)
@@ -28,6 +34,12 @@ public class NullVector extends ParameterVector
 
     @Override
     public void setDeriv(int i, double v)
+    {
+        throw new IndexOutOfBoundsException();
+    }
+    
+    @Override
+    public void addDeriv(int i, double v)
     {
         throw new IndexOutOfBoundsException();
     }

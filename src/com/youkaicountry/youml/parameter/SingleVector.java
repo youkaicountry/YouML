@@ -29,6 +29,13 @@ public class SingleVector extends ParameterVector
         this.param_buffer[i] = v;
         return;
     }
+    
+    @Override
+    public void addParam(int i, double v)
+    {
+        this.param_buffer[i] += v;
+        return;
+    }
 
     @Override
     public double getDeriv(int i)
@@ -40,6 +47,13 @@ public class SingleVector extends ParameterVector
     public void setDeriv(int i, double v)
     {
         this.deriv_buffer[i] = v;
+        return;
+    }
+    
+    @Override
+    public void addDeriv(int i, double v)
+    {
+        this.deriv_buffer[i] += v;
         return;
     }
 
