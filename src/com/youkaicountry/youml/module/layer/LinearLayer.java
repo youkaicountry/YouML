@@ -13,6 +13,19 @@ public class LinearLayer extends Layer
         return;
     }
     
+    public LinearLayer(LayerOptions lo)
+    {
+        this(lo.name, lo.neurons);
+        return;
+    }
+    
+    //For the loader class
+    public static class LayerOptions
+    {
+        public String name;
+        public int neurons;
+    }
+    
     @Override
     public void forwardProp(double[] input, double[] output)
     {

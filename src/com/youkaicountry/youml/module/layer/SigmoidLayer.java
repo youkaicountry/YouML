@@ -2,6 +2,7 @@ package com.youkaicountry.youml.module.layer;
 import java.lang.Math;
 
 import com.youkaicountry.youml.module.Module;
+import com.youkaicountry.youml.module.layer.LinearLayer.LayerOptions;
 import com.youkaicountry.youml.parameter.NullVector;
 
 public class SigmoidLayer extends Layer
@@ -12,7 +13,20 @@ public class SigmoidLayer extends Layer
         this.moduleInit(neurons, neurons, new NullVector(this));
         return;
     }
-
+    
+    public SigmoidLayer(LayerOptions lo)
+    {
+        this(lo.name, lo.neurons);
+        return;
+    }
+    
+    //For the loader class
+    public static class LayerOptions
+    {
+        public String name;
+        public int neurons;
+    }
+    
     @Override
     public void forwardProp(double[] input, double[] output)
     {

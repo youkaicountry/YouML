@@ -1,5 +1,6 @@
 package com.youkaicountry.youml.module.layer;
 
+import com.youkaicountry.youml.module.layer.SigmoidLayer.LayerOptions;
 import com.youkaicountry.youml.parameter.NullVector;
 
 public class ThresholdLayer extends Layer
@@ -11,6 +12,20 @@ public class ThresholdLayer extends Layer
         super(name);
         this.moduleInit(neurons, neurons, new NullVector(this));
         return;
+    }
+    
+    public ThresholdLayer(LayerOptions lo)
+    {
+        this(lo.name, lo.neurons, lo.threshold);
+        return;
+    }
+    
+    //For the loader class
+    public static class LayerOptions
+    {
+        public String name;
+        public int neurons;
+        public double threshold;
     }
 
     @Override

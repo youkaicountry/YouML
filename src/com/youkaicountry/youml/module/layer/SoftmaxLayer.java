@@ -1,5 +1,6 @@
 package com.youkaicountry.youml.module.layer;
 
+import com.youkaicountry.youml.module.layer.SigmoidLayer.LayerOptions;
 import com.youkaicountry.youml.parameter.NullVector;
 
 public class SoftmaxLayer extends Layer
@@ -10,7 +11,20 @@ public class SoftmaxLayer extends Layer
         this.moduleInit(neurons, neurons, new NullVector(this));
         return;
     }
-
+    
+    public SoftmaxLayer(LayerOptions lo)
+    {
+        this(lo.name, lo.neurons);
+        return;
+    }
+    
+    //For the loader class
+    public static class LayerOptions
+    {
+        public String name;
+        public int neurons;
+    }
+    
     @Override
     public void forwardProp(double[] input, double[] output)
     {
