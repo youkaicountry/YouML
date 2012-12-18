@@ -1,4 +1,4 @@
-A Java machine language library.
+A Java machine language library, under the MIT license. See LICENSE for details.
 
 Currently only has feed forward neural network with backpropagation implemented, planning on adding other types of ML such as clustering.
 
