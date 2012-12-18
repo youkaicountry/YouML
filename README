@@ -1,0 +1,8 @@
+A Java machine language library.
+
+Currently only has feed forward neural network with backpropagation implemented, planning on adding other types of ML such as clustering.
+
+To see examples of how to use the library, check:
+src/com/youkaicountry/youml/test
+
+for unit tests.
