@@ -45,7 +45,7 @@ public class HiddenLayerNetworkBuilder extends Builder
 	}
 
 	@Override
-	public Module build() 
+	public Module build()
 	{
 		ArrayList<Module> m = new ArrayList<Module>();
 		for (int i = 0; i < this.layer_sizes.size()-1; i++)

@@ -14,9 +14,9 @@ import com.youkaicountry.youml.parameter.ParameterVector;
 
 public abstract class Layer extends Module
 {
-    public Layer(String name, int input_dim, int output_dim, ParameterVector pv)
+    public Layer(String name, int neurons, ParameterVector pv)
     {
-        super(name, input_dim, output_dim, pv);
+        super(name, neurons, neurons, pv);
         return;
     }
     

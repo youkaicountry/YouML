@@ -90,5 +90,24 @@ public class NeuronTest
         }
         return;
     }
+    
+    @Test
+    public void test_reflection_loader_no_params()
+    {
+        String uname = "dengus";
+        int uneurons = 3;
+        LayerLoader ll = new LayerLoader();
+        //HashMap<String, Object> params = new HashMap<String, Object>();
+        //params.put("name", uname);
+        //params.put("neurons", uneurons);
+        for (Class<?> c : LayerTypes.standard_layers)
+        {
+            Layer l = ll.load(c.getSimpleName(), uname, uneurons);
+            assertEquals(uneurons, l.input_dim);
+            assertEquals(uneurons, l.output_dim);
+            assertEquals(uname, l.name);
+        }
+        return;
+    }
 
 }

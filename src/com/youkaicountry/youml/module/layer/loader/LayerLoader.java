@@ -36,6 +36,20 @@ public class LayerLoader
         this(LayerTypes.standard_layers);
     }
     
+    public Layer load(String class_name, String layer_name, int neurons)
+    {
+        HashMap<String, Object> uparams = new HashMap<String, Object>();
+        return this.load(class_name, layer_name, neurons, uparams);
+    }
+    
+    public Layer load(String class_name, String layer_name, int neurons, Map<String, Object> params)
+    {
+        HashMap<String, Object> uparams = new HashMap<String, Object>(params);
+        uparams.put("name", layer_name);
+        uparams.put("neurons", neurons);
+        return this.load(class_name, uparams);
+    }
+    
     // Thanks Java. You certainly make life easy.
     public Layer load(String class_name, Map<String, Object> params)
     {
