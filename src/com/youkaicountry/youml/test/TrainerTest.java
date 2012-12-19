@@ -64,10 +64,10 @@ public class TrainerTest
         Connection c4 = new FullConnection("c4", bout0, out0);
         Connection c5 = new FullConnection("c5", hid0, out0);
         Module[] inputs = new Module[] {inp0};
-        Module[] hidden = new Module[] {hid0, c1, bout0, c0, c5, bhid0, hid0, c4};
+        Module[] hidden = new Module[] {hid0, c1, bout0, c0, c5, bhid0, c4};
         Module[] outputs = new Module[] {out0};
         FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
-        Random r = new Random(1213);
+        Random r = new Random(1217);
         for (int i = 0; i < n.size(); i++)
         {
             n.setParam(i, r.nextDouble()*.5-.25);
@@ -95,7 +95,8 @@ public class TrainerTest
         {
         	bpt.trainBatch(tb);
         }
-        assertTrue(Math.abs(bpt.trainBatch(tb)) < ierror);
+        double oerror = Math.abs(bpt.trainBatch(tb));
+        assertTrue(oerror < ierror);
     	return;
     }
 }

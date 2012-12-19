@@ -18,5 +18,5 @@ public abstract class Builder
 		return;
 	}
 	
-	public abstract Module build();
+	public abstract Module build(String name);
 }

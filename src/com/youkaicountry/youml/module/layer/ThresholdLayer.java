@@ -34,7 +34,7 @@ public class ThresholdLayer extends Layer
     {
         public String name;
         public int neurons;
-        public double threshold = 1.0;
+        public double threshold = 0.0;
     }
 
     @Override

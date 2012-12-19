@@ -214,6 +214,38 @@ public class NetworkTest
         return;
     }
     
+    @Test
+    public void test_ff_builder_xor()
+    {
+        LinearLayer inp0 = new LinearLayer("inp0", 2);
+        BiasUnit b0 = new BiasUnit("bias0", 1.0);
+        BiasUnit b1 = new BiasUnit("bias1", 1.0);
+        BiasUnit b2 = new BiasUnit("bias2", 1.0);
+        ThresholdLayer t0 = new ThresholdLayer("t0", 1, 0.0);
+        ThresholdLayer t1 = new ThresholdLayer("t1", 1, 0.0);
+        ThresholdLayer out0 = new ThresholdLayer("out0", 1, 0.0);
+        Connection c0 = new FullConnection("c0", inp0, t0);
+        Connection c1 = new FullConnection("c1", inp0, t1);
+        Connection c2 = new FullConnection("c2", t0, out0);
+        Connection c3 = new FullConnection("c3", t1, out0);
+        Connection c4 = new FullConnection("c4", b0, t0);
+        Connection c5 = new FullConnection("c5", b1, t1);
+        Connection c6 = new FullConnection("c6", b2, out0);
+        Module[] inputs = new Module[] {inp0};
+        Module[] hidden = new Module[] {c0, c1, c2, c3, c4, c5, c6, b0, b1, b2, t0, t1};
+        Module[] outputs = new Module[] {out0};
+        FeedForwardNetwork n = new FeedForwardNetwork("ffn", inputs, hidden, outputs);
+        double[] tc0 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 1.0, 1.0, 0.0};
+        testCase(tc0, n, 0.0);
+        double[] tc1 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 0.0, 1.0, 1.0};
+        testCase(tc1, n, 0.0);
+        double[] tc2 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 1.0, 0.0, 1.0};
+        testCase(tc2, n, 0.0);
+        double[] tc3 = new double[] {1.0, 1.0, 1.0, 1.0, -2.0, 1.0, -1.5, -0.5, -0.5, 0.0, 0.0, 0.0};
+        testCase(tc3, n, 0.0);
+        return;
+    }
+    
     //A test case looks like:
     //param0, param1, ..., inp0, inp1, ..., out0, out1, ...
     private void testCase(double[] test_case, Module mod, double delta_error)

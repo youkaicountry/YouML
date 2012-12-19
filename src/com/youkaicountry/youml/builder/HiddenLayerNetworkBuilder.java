@@ -11,48 +11,94 @@ package com.youkaicountry.youml.builder;
 
 import java.util.ArrayList;
 
+import com.youkaicountry.youml.module.BiasUnit;
 import com.youkaicountry.youml.module.Module;
+import com.youkaicountry.youml.module.connection.Connection;
+import com.youkaicountry.youml.module.connection.FullConnection;
+import com.youkaicountry.youml.module.layer.loader.LayerLoader;
+import com.youkaicountry.youml.module.network.FeedForwardNetwork;
 
 public class HiddenLayerNetworkBuilder extends Builder 
 {
 	private ArrayList<String> layer_types;
 	private ArrayList<Integer> layer_sizes;
-	private ArrayList<Integer> bias;
+	private ArrayList<Double> layer_bias;
+	private LayerLoader loader;
 	
-	public HiddenLayerNetworkBuilder(String hidden_layers, String output_layer, int hidden_bias, int output_bias, Integer... layer_sizes)
+	public HiddenLayerNetworkBuilder(String hidden_layers, String output_layer, double hidden_bias, double output_bias, int... layer_sizes)
 	{
 		init();
 		for (Integer s : layer_sizes)
 		{
 			this.layer_types.add(hidden_layers);
 			this.layer_sizes.add(s);
-			this.bias.add(hidden_bias);
+			this.layer_bias.add(hidden_bias);
 		}
 		int last = this.layer_types.size()-1;
 		this.layer_types.set(last, output_layer);
-		this.bias.set(last, output_bias);
+		this.layer_bias.set(last, output_bias);
 		this.layer_types.set(0, "LinearLayer");
-		this.bias.set(0, 0);
+		this.layer_bias.set(0, 0.0);
 		return;
 	}
 	
 	private void init()
 	{
+	    this.loader = new LayerLoader();
 		layer_types = new ArrayList<String>();
 		layer_sizes = new ArrayList<Integer>();
-		bias = new ArrayList<Integer>();
+		layer_bias = new ArrayList<Double>();
 		return;
 	}
 
 	@Override
-	public Module build()
+	public Module build(String name)
 	{
+	    ArrayList<Module> inp = new ArrayList<Module>();
 		ArrayList<Module> m = new ArrayList<Module>();
-		for (int i = 0; i < this.layer_sizes.size()-1; i++)
+		ArrayList<Module> out = new ArrayList<Module>();
+		String lname = "layer0";
+		Module last_layer = addModules(lname, 0, m);
+		inp.add(last_layer);
+		for (int i = 1; i < this.layer_sizes.size(); i++)
 		{
-			// TODO: if bias is 0, don't even make a bias unit
+		    lname = "layer" + i;
+		    ArrayList<Module> um = (i == this.layer_sizes.size()-1) ? out : m;
+		    Module this_layer = addModules(lname, i, m);
+		    um.add(this_layer);
+		    //do connection to last module
+            Connection c = new FullConnection(lname+"_in_connection", last_layer, this_layer);
+            m.add(c);
+            last_layer = this_layer;
 		}
-		return null;
+		//System.out.println(inp);
+		//System.out.println(m);
+		//System.out.println(out);
+		return new FeedForwardNetwork(name, al2a(inp), al2a(m), al2a(out));
+	}
+	
+	private Module[] al2a(ArrayList<Module> m)
+	{
+	    Module[] out = new Module[m.size()];
+	    for (int i = 0; i < m.size(); i++)
+	    {
+	        out[i] = (Module)m.get(i);
+	    }
+	    return out;
+	}
+	
+	private Module addModules(String lname, int i, ArrayList<Module> m)
+	{
+        Module this_layer = loader.load(this.layer_types.get(i), lname+"_units", this.layer_sizes.get(i));
+        double bias = this.layer_bias.get(i);
+        if (bias != 0)
+        {
+            BiasUnit b = new BiasUnit(lname+"_bias", bias);
+            Connection bc = new FullConnection(lname+"_bias_connection", b, this_layer);
+            m.add(b);
+            m.add(bc);
+        }
+	    return this_layer;
 	}
 	
 }
