@@ -25,7 +25,7 @@ public class HiddenLayerNetworkBuilder extends Builder
 	private ArrayList<Double> layer_bias;
 	private LayerLoader loader;
 	
-	public HiddenLayerNetworkBuilder(String hidden_layers, String output_layer, double hidden_bias, double output_bias, int... layer_sizes)
+	public HiddenLayerNetworkBuilder(double hidden_bias, double output_bias, String hidden_layers, String output_layer,  int... layer_sizes)
 	{
 		init();
 		for (Integer s : layer_sizes)
@@ -41,6 +41,19 @@ public class HiddenLayerNetworkBuilder extends Builder
 		this.layer_bias.set(0, 0.0);
 		return;
 	}
+	
+	public HiddenLayerNetworkBuilder(String hidden_layers, String output_layer, int... layer_sizes)
+	{
+	    this(1.0, 1.0, hidden_layers, output_layer, layer_sizes);
+	    return;
+	}
+	
+	public HiddenLayerNetworkBuilder(int... layer_sizes)
+    {
+        //this("SigmoidLayer", "LinearLayer", 1.0, 1.0, layer_sizes);
+	    this("SigmoidLayer", "LinearLayer", layer_sizes);
+	    return;
+    }
 	
 	private void init()
 	{

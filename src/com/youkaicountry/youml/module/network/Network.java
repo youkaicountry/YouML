@@ -9,6 +9,9 @@
  ******************************************************************************/
 package com.youkaicountry.youml.module.network;
 
+import java.util.HashMap;
+import java.util.Set;
+
 import com.youkaicountry.youml.module.Module;
 import com.youkaicountry.youml.netgraph.NetGraph;
 import com.youkaicountry.youml.parameter.MultiCaseVector;
@@ -16,7 +19,8 @@ import com.youkaicountry.youml.parameter.ParameterVector;
 
 public abstract class Network extends Module
 {
-    protected NetGraph graph;
+    public NetGraph graph;
+    protected HashMap<String, Module> name2module;
     
     public Network(String name, Module[] input_modules, Module[] hidden_modules, Module[] output_modules)
     {
@@ -63,7 +67,22 @@ public abstract class Network extends Module
         {
             output_modules[i].setOutput(this.output_buffer);
         }*/
+        this.name2module = new HashMap<String, Module>();
+        for (Module m : this.graph.sorted_modules)
+        {
+            this.name2module.put(m.name, m);
+        }
         return;
+    }
+    
+    public Module getModule(String name)
+    {
+        return this.name2module.get(name);
+    }
+    
+    public Set<String> getModuleNames()
+    {
+        return this.name2module.keySet();
     }
     
     @Override
