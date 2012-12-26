@@ -15,7 +15,6 @@ import com.youkaicountry.youml.utils.GradientDescent;
 
 public class BackPropTrainer extends Trainer
 {
-    private double learning_rate;
     private GradientDescent gd;
     
     public BackPropTrainer(Module m, double alpha, double alpha_decay, double momentum)
@@ -49,13 +48,6 @@ public class BackPropTrainer extends Trainer
             }
             this.m.backtivate(error, tb.getCaseInput(0));
         }
-        
-        //for (int i = 0; i < this.m.size(); i++)
-        //{
-        	//double dw = this.learning_rate*this.m.getDeriv(i);
-        	//this.m.setParam(i, this.m.getParam(i)+dw);
-        	//this.m.addParam(i, dw);
-        //}
         this.gd.descend();
         return error_sum / tb.size();
     }
@@ -82,16 +74,6 @@ public class BackPropTrainer extends Trainer
             	error_sum += Math.abs(res_error);
             }
             this.m.backtivate(error, tb.getCaseInput(0));
-            
-            //for (int k = 0; k < this.m.size(); k++)
-            //{
-                // delta weight, this parameter's value of the gradient times
-                // the learning rate
-            	//double dw = this.learning_rate*this.m.getDeriv(k);
-            	//this.m.setParam(k, this.m.getParam(k)+dw);
-            	//this.m.addParam(i, dw);
-                
-            //}
             this.gd.descend();
         }
         return error_sum / tb.size();

@@ -32,7 +32,6 @@ public class GradientDescent
             this.momentum_vector[i] += this.alpha * this.pv.getDeriv(i);
             this.pv.addParam(i, this.momentum_vector[i]);
             this.alpha *= this.alpha_decay;
-            //System.out.println(this.pv.getParam(i));
         }
         return;
     }
