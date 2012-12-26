@@ -25,12 +25,14 @@ public class GradientDescent
     
     public void descend()
     {
+        
         for (int i = 0; i < this.pv.size(); i++)
         {
             this.momentum_vector[i] *= this.momentum;
             this.momentum_vector[i] += this.alpha * this.pv.getDeriv(i);
             this.pv.addParam(i, this.momentum_vector[i]);
             this.alpha *= this.alpha_decay;
+            //System.out.println(this.pv.getParam(i));
         }
         return;
     }

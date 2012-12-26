@@ -45,7 +45,7 @@ public class TrainerTest
         n.setParam(3, .3);
         TrainingBatch td = new TrainingBatch();
         td.addCase(new double[] {1.0, 1.0}, new double[] {sigmoid(2.0), sigmoid(2.0)});
-        BackPropTrainer bpt = new BackPropTrainer(n, .01);
+        BackPropTrainer bpt = new BackPropTrainer(n, .01, 1.0, 0.0);
         testErrorDecreasing(bpt, td, 100);
         return;
     }
@@ -78,7 +78,7 @@ public class TrainerTest
         td.addCase(new double[] {1.0, 0.0}, new double[] {1.0});
         td.addCase(new double[] {0.0, 1.0}, new double[] {1.0});
         td.addCase(new double[] {0.0, 0.0}, new double[] {0.0});
-        BackPropTrainer bpt = new BackPropTrainer(n, .1);
+        BackPropTrainer bpt = new BackPropTrainer(n, .1, 1.0, 0.0);
         testErrorDecreasing(bpt, td, 100);
         return;
     }

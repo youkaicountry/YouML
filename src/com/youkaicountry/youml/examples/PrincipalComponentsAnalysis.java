@@ -29,7 +29,7 @@ public class PrincipalComponentsAnalysis
         td.addCase(new double[] {0.0, 1.0, 0.0, 0.0}, new double[] {0.0, 1.0, 0.0, 0.0});
         td.addCase(new double[] {0.0, 0.0, 1.0, 0.0}, new double[] {0.0, 0.0, 1.0, 0.0});
         td.addCase(new double[] {0.0, 0.0, 0.0, 1.0}, new double[] {0.0, 0.0, 0.0, 1.0});
-        BackPropTrainer bpt = new BackPropTrainer(n, .1);
+        BackPropTrainer bpt = new BackPropTrainer(n, .1, 1.0, 0.0);
         int iterations = 300000;
         double error = 0;
         for (int i = 0; i < iterations; i++)
