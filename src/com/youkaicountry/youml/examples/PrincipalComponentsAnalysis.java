@@ -29,8 +29,8 @@ public class PrincipalComponentsAnalysis
         td.addCase(new double[] {0.0, 1.0, 0.0, 0.0}, new double[] {0.0, 1.0, 0.0, 0.0});
         td.addCase(new double[] {0.0, 0.0, 1.0, 0.0}, new double[] {0.0, 0.0, 1.0, 0.0});
         td.addCase(new double[] {0.0, 0.0, 0.0, 1.0}, new double[] {0.0, 0.0, 0.0, 1.0});
-        BackPropTrainer bpt = new BackPropTrainer(n, .1, 1.0, 0.0);
-        int iterations = 300000;
+        BackPropTrainer bpt = new BackPropTrainer(n, .1, 1.0, 0.9);
+        int iterations = 800000;
         for (int i = 0; i < iterations; i++)
         {
             bpt.trainBatch(td);
@@ -42,20 +42,38 @@ public class PrincipalComponentsAnalysis
         Module m = n.getModule("layer2_units");
         n.activate(new double[] {1.0, 0.0, 0.0, 0.0});
         System.out.println(m.output_buffer[0]);
-        System.out.println(n.output_buffer[0] +" " + n.output_buffer[1]+" " + n.output_buffer[2]+" " + n.output_buffer[3]);
+        System.out.println(render_output(n));
         n.clearBuffers();
         n.activate(new double[] {0.0, 1.0, 0.0, 0.0});
         System.out.println(m.output_buffer[0]);
-        System.out.println(n.output_buffer[0] +" " + n.output_buffer[1]+" " + n.output_buffer[2]+" " + n.output_buffer[3]);
+        System.out.println(render_output(n));
         n.clearBuffers();
         n.activate(new double[] {0.0, 0.0, 1.0, 0.0});
         System.out.println(m.output_buffer[0]);
-        System.out.println(n.output_buffer[0] +" " + n.output_buffer[1]+" " + n.output_buffer[2]+" " + n.output_buffer[3]);
+        System.out.println(render_output(n));
         n.clearBuffers();
         n.activate(new double[] {0.0, 0.0, 0.0, 1.0});
         System.out.println(m.output_buffer[0]);
-        System.out.println(n.output_buffer[0] +" " + n.output_buffer[1]+" " + n.output_buffer[2]+" " + n.output_buffer[3]);
+        System.out.println(render_output(n));
         return;
+    }
+    
+    private static String render_output(Module m)
+    {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < m.output_dim; i++)
+        {
+            sb.append(number_clip(m.output_buffer[i]));
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
+    
+    private static double number_clip(double val)
+    {
+        if (val < 1e-6) {return 0;}
+        if (val > .999999) {return 1.0;}
+        return val;
     }
 
 }

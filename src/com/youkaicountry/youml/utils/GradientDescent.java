@@ -15,7 +15,7 @@ import com.youkaicountry.youml.parameter.ParameterVector;
 
 public class GradientDescent
 {
-    private ParameterVector pv;
+    public ParameterVector pv;
     private double momentum;
     private double alpha;
     private double alpha_decay;
